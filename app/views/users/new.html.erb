@@ -1,0 +1,15 @@
+<%= page_title 'Signup' %>
+
+<% semantic_form_for @user, :url => account_path do |f| %>
+  <% f.fieldset do %>
+    <%= f.error_messages %>
+    
+    <%= render :partial => "form", :object => f %>
+    
+    <dd class='buttons'>
+      <%= pretty_positive_button 'Signup' %>
+      <%= pretty_negative_button_link 'Cancel', root_path %>
+    </dd>
+    
+  <% end %>
+<% end %>

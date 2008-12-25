@@ -1,0 +1,31 @@
+DisplayFlashHelper
+==================
+
+Just a little helper to make it easier to display notice, warning, and error messages. It will only 
+show flash[:notice], flash[:warning], or flash[:error] messages.
+
+There are some default styles and icons that can be used.  
+
+  rake display_helper:setup
+
+Example
+=======
+
+In your controller:
+
+  def create
+    do_somthing
+    flash[:notice] = 'Something has been done.'
+  end
+
+In your view (layout or template):
+
+  <%= display_flash %>
+  
+And it will create:
+  <div id="flash">
+    <div class="notice">Something has been done.</div>
+  </div>
+
+Silk Icons from http://famfamfam.com/lab/icons/silk/, released under the Creative Commons Attribution 2.5 License
+Copyright (c) 2008 Geoffrey Dagley, released under the MIT license

@@ -1,0 +1,76 @@
+SeoHelper
+===============
+
+These are some simple little helper to make pages a little more SEO friendly.
+
+Examples
+========
+
+page_title
+
+  - should create a title with h1
+  
+      page_title('Hello World') => <h1>Hello World</h1>
+  
+  - should create a title with an alternate tag
+  
+      page_title('Hello World', :h3) => <h3>Hello World</h3>
+  
+  - should set the content for html page title
+
+      see discussion for html_title that follows
+
+html_title
+
+  - should create an html title
+
+      html_title('SiteName') => <title>SiteName</title>
+  
+  - should create an html title with content for html page title
+  
+      index.html.erb  
+        page_title('My Index')
+    
+      application.html.erb
+        html_title('SiteName') => <title>My Index : SiteName</title>
+
+  - should create an html title specified delimiter
+  
+      index.html.erb  
+        page_title('My Index')
+  
+      application.html.erb
+        html_title('SiteName', '|') => <title>My Index | SiteName</title>
+  
+meta_tags
+  - should create meta tags from a hash
+  
+      meta = {:description => 'This is the description', :keywords => 'these are keywords'}
+      meta_tags(meta) => 
+        <meta name="keywords" content="these are keywords" />
+        <meta name="description" content="This is the description" />
+
+breadcrumb_trail
+  - should create a breadcrumb trail
+  
+      crumbs = [{:name => 'Home', :link => 'http://test.host/'},
+                {:name => 'Shops'}]
+      breadcrumb_trail(crumbs).should => 
+        <div class="breadcrumbs"><a href="http://test.host/">Home</a> &gt; Shops</div>
+  
+  - should create a breadcrumb trail with a specified tag
+
+      crumbs = [{:name => 'Home', :link => 'http://test.host/'},
+                {:name => 'Shops'}]
+      breadcrumb_trail(crumbs, :span).should => 
+        <span class="breadcrumbs"><a href="http://test.host/">Home</a> &gt; Shops</span>
+
+  - should create a breadcrumb trail with specified delimiter
+
+    crumbs = [{:name => 'Home', :link => 'http://test.host/'},
+              {:name => 'Shops'}]
+    breadcrumb_trail(crumbs. :div, '|').should => 
+      <div class="breadcrumbs"><a href="http://test.host/">Home</a> | Shops</div>
+
+
+Copyright (c) 2008 Relevance, Inc., released under the MIT license

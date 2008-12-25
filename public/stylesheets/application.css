@@ -1,0 +1,28 @@
+#account_bar { width: 950px; margin: 0 auto; }
+#header { width: 950px; margin: 0 auto; }
+#content { width: 950px; margin: 0 auto; }
+#main { float: left; margin-right: 10px; width: 710px; }
+#sidebar { float: left; margin-right: 10px; margin-right: 0; width: 230px; }
+#footer { width: 950px; margin: 0 auto; }
+
+#account_bar {text-align: right;}
+#account_bar ul li {display: inline; margin-left: 1em;}
+
+#header #site-title {font-size: 4em; line-height: 1;}
+#header #site-tag {font-size: 2em;}
+
+#footer {text-align: center; font-size: .75em; color: #666;}
+
+#admin_nav ul {margin-left: 0;}
+#admin_nav ul li {display: inline;}
+
+form dt {float: left; width: 12em; margin-right: 1em; text-align: right;}
+form dd {margin-bottom: 1em;}
+form dd.buttons {margin-left: 13em;}
+
+form .fieldWithErrors {padding: 2px; background-color: #8a1f11; display: table;}
+form #errorExplanation {border: 2px solid #8a1f11; margin-bottom: 1em; background-color: #f0f0f0; }
+form #errorExplanation h2 {background-color: #8a1f11; border-bottom: 2px solid #8a1f11; color: #FFFFFF; margin-bottom: .25em; padding-left: 10px;}
+form #errorExplanation p {color: #333; margin-bottom: 0; padding-left: 10px;}
+form #errorExplanation ul {margin-bottom: 1em; padding-left: 10px;}
+

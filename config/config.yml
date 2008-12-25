@@ -1,0 +1,18 @@
+# This file was auto-generated.  Feel free to customize it to your whim.
+
+development: &local
+    site_name: BaseJumper
+    site_domain: "localhost:3000"
+    site_title: Base Jumper
+    site_tag: Getting started quicker
+    admin_email: admin@basejumper.example.com
+    accounts_email: accounts@basejumper.example.com
+
+test:
+  <<: *local
+  site_domain: www.yourrealapp.com
+  
+production:
+  <<: *local
+  site_domain: www.yourrealapp.com
+

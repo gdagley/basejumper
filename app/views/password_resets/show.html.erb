@@ -1,0 +1,15 @@
+<%= page_title 'Forgot Password' %>
+
+<p>Fill out the form below and instructions to reset your password will be emailed to you:</p>
+
+<% form_tag password_reset_path do %>
+  <% semantic_fieldset_tag do |f| %>
+  
+    <%= f.text_field_tag :email %>
+    
+    <dd class='buttons'>
+      <%= pretty_positive_button 'Reset my password' %>
+      <%= pretty_negative_button_link 'Cancel', login_path %>
+    </dd>
+  <% end %>
+<% end %>

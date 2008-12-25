@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <%= html_title configatron.site_name %>
+  
+    <%= stylesheet_link_tag 'blueprint/screen.css', :media => 'screen, projection' %> 
+    <%= stylesheet_link_tag 'blueprint/print.css', :media => 'print' %>
+    <!--[if IE]><%= stylesheet_link_tag 'blueprint/ie.css', :media => "screen, projection" %><![endif]-->
+
+    <%= stylesheet_link_tag 'blueprint/plugins/buttons/screen.css' %> 
+    <%= stylesheet_link_tag 'jquery-ui/jquery-ui.css' %> 
+    <%= stylesheet_link_tag 'application.css', :media => 'screen, projection' %> 
+
+    <%= javascript_include_tag 'jquery.min.js' %>
+    <%= javascript_include_tag 'jquery-ui.min.js' %>
+  
+    <%= yield :html_head %>
+  </head>
+
+  <body id="<%= params[:controller] %>" class="<%= params[:action] %>">
+    <%= render :partial => 'layouts/account_bar' %>
+    <%= render :partial => 'layouts/header' %>
+    <div id='content' class='clearfix'>
+      <div id='main'>
+    	  <%= display_flash %>
+    	  <%= yield %>
+      </div>
+      <%= render :partial => 'layouts/sidebar' %>
+    </div>
+    <%= render :partial => 'layouts/footer' %>
+  </body>
+</html>

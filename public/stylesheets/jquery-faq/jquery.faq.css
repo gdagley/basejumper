@@ -1,0 +1,14 @@
+#faqRoot {width: 800px;margin: 0 auto;padding: 0;}
+#faqindex {float: right;width: 190px;font-family: consolas,verdana,helvetica,sans-serif;}
+#faqindex a, #faqindex a:visited {text-decoration: none;color: #666;}
+#faqindex a:active, #faqindex a:hover {color: #000;border-bottom:dotted #ccc 1px;}
+#faqindex ul {list-style-type: square;list-style-image: none;list-style-position: outside;padding-left:25px;line-height: 18px;margin-top: 5px;font-size:80%;}
+#faqindex ul li {color:#666666;white-space:nowrap;}
+#faqindex h2 {padding: 0;margin-bottom: 0;border-bottom: dotted 1px #ccc;color: #666666;}
+#faq {float:left;width: 600px;margin: 0 auto; font-family: consolas,verdana,helvetica,sans-serif;}
+#faq {margin-bottom: 25px;}
+#faq .faqcontent {margin: 0 10px 0 10px;font-size: 95%;}
+#faq h2.faqopened, #faq h2.faqclosed {cursor: pointer;padding: 0 0 0 15px;border-bottom: dotted 1px #ccc;margin-bottom: 0;}
+#faq h2.faqclosed:hover {color: black;}
+#faq h2.faqclosed {color: #666666;background: transparent url(/stylesheets/jquery-faq/images/collapsed.png) no-repeat scroll 0 10px;}
+#faq h2.faqopened {color: black;background: transparent url(/stylesheets/jquery-faq/images/expanded.png) no-repeat scroll 0 10px;}

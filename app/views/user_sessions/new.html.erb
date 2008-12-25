@@ -1,0 +1,24 @@
+<%= page_title 'Login' %>
+
+<% semantic_form_for @user_session, :url => user_session_path do |f| %>
+  <% f.fieldset do %>
+    <%= f.error_messages %>
+
+    <%= f.text_field :login %>
+
+    <%= f.password_field :password %>
+
+    <%= f.check_box :remember_me %>
+
+    <dd class='buttons'>
+      <%= pretty_positive_button 'Login' %>
+      <%= pretty_negative_button_link 'Cancel', root_path %>
+    </dd>
+    
+  <% end %>
+<% end %>
+
+<p>
+  Need an account? <%= link_to 'Sign up now.', signup_path %><br/>
+  Forgot your password? <%= link_to 'Reset your password.', password_reset_path %>
+</p>
