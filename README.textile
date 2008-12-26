@@ -1,0 +1,71 @@
+h1. BaseJumper
+
+There are others, I know, but this is how I like my apps to start out.  Based on the Authlogic sample app (http://github.com/binarylogic/authlogic_example), password_resets branch.
+
+h2. What is included?
+
+* Authentication (including password reset)
+* Welcome page placeholder
+* Static content placeholders (About, FAQ, Privacy)
+* Contact Us form
+* Basic styling using Blueprint CSS
+* Spec driven development using RSpec, without fixtures
+* ActiveScaffold admin interface
+* Application configuration file
+* Blueprint CSS styling
+* JQuery and JQuery-UI installed
+* FamFamFam icons where needed
+
+Use as you will.  I may update it occasionally.  Offer suggestions.
+
+h2. Gems
+
+h3. Authlogic
+
+The way I think authentication should be done.  
+
+h3. Configatron
+
+For application configuration.
+
+h3. will-paginate
+
+Because eventually you need pagination.
+
+h3. log-buddy
+
+For the lazy debugger in all of us.
+
+h3. rspec and rspec-on-rails
+
+It just makes more sense to me.
+
+h2. Plugins
+
+h3. active_form
+
+Easy AR validations for non-AR models (for those Contact Us forms)
+
+h3. active_scaffold
+
+Fastest way to build a super simple admin interface.
+
+h3. display_flash_helper
+
+Shameless use of my own plugin to display flash messages
+
+h3. exception_notification
+
+Because they happen and I want to know about them.
+
+h3. pretty_buttons
+
+HTML buttons shouldn't have to look so bad.
+
+h3. semantic_form_builder
+
+HTML forms made easier
+
+h3. seo_helper
+
+A few useful helpers for SEO purposes.
