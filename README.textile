@@ -1,6 +1,8 @@
 h1. BaseJumper
 
-There are others, I know, but this is how I like my apps to start out.  Based on the Authlogic sample app (http://github.com/binarylogic/authlogic_example), password_resets branch.
+There are others, I know, but this is how I like my apps to start out.  You probably won't like it, so move along.
+
+Based on the Authlogic sample app (http://github.com/binarylogic/authlogic_example), password_resets branch.
 
 h2. What is included?
 
