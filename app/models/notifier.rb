@@ -8,4 +8,12 @@ class Notifier < ActionMailer::Base
     sent_on       Time.now
     body          :user => user
   end
+  
+  def contact(contact)
+    subject       contact.subject
+    from          contact.email 
+    recipients    configatron.info_email
+    sent_on       Time.now
+    body          :contact => contact
+  end
 end

@@ -7,6 +7,7 @@ development: &local
     site_tag: Getting started quicker
     admin_email: admin@basejumper.example.com
     accounts_email: accounts@basejumper.example.com
+    info_email: info@basejumper.example.com
 
 test:
   <<: *local
