@@ -1,3 +1,4 @@
+config/deploy.rb
 db/schema.rb
 db/*.sqlite3
 doc/api
