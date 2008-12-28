@@ -5,6 +5,6 @@ doc/api
 doc/app
 coverage
 tmp/*
-log/*
+log/*.log
 public/cache/*
 .DS_Store
