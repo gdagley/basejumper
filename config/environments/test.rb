@@ -4,8 +4,7 @@
 # test suite.  You never need to work with it otherwise.  Remember that
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs.  Don't rely on the data there!
-# See http://rails.lighthouseapp.com/projects/8994/tickets/802-eager-load-application-classes-can-block-migration for reasoning
-config.cache_classes = (File.basename($0) == "rake" && ARGV.include?("db:migrate")) ? false : true
+config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true

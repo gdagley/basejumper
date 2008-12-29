@@ -2,8 +2,7 @@
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
-# See http://rails.lighthouseapp.com/projects/8994/tickets/802-eager-load-application-classes-can-block-migration for reasoning
-config.cache_classes = (File.basename($0) == "rake" && ARGV.include?("db:migrate")) ? false : true
+config.cache_classes = true
 
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new

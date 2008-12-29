@@ -1,6 +1,6 @@
 config/deploy.rb
 db/schema.rb
-db/*.sqlite3
+db/development.sqlite3
 doc/api
 doc/app
 coverage
