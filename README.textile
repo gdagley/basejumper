@@ -30,9 +30,9 @@ h3. Configatron
 
 For application configuration.
 
-h3. will-paginate
+h3. Searchlogic
 
-Because eventually you need pagination.
+Because eventually you need pagination, and then you get sorting and filtering when you need it.
 
 h3. log-buddy
 
