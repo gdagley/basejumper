@@ -11,23 +11,23 @@ describe PasswordResetsController do
   describe "POST /password_reset" do
     before(:each) do
       @user = mock_model(User)
-      User.stub!(:find_by_email).and_return(@user)
-      @user.stub!(:deliver_password_reset_instructions!)
+      User.stubs(:find_by_email).returns(@user)
+      @user.stubs(:deliver_password_reset_instructions!)
     end
     
     it "should look for user by email" do
-      User.should_receive(:find_by_email).and_return(@user)
+      User.expects(:find_by_email).returns(@user)
       post :create
     end
     
     it "should re-render form when no user is found" do
-      User.stub!(:find_by_email).and_return(nil)
+      User.stubs(:find_by_email).returns(nil)
       post :create
       response.should render_template('show')
     end
     
     it "should deliver password reset instructions when user is found" do
-      @user.should_receive(:deliver_password_reset_instructions!)
+      @user.expects(:deliver_password_reset_instructions!)
       post :create
     end
     
@@ -40,16 +40,16 @@ describe PasswordResetsController do
   describe "GET /password_reset/edit?id=SOME_PERISHABLE_TOKEN" do
     before(:each) do
       @user = mock_model(User)
-      User.stub!(:find_using_perishable_token).and_return(@user)
+      User.stubs(:find_using_perishable_token).returns(@user)
     end
     
     it "should look for user using perishable token" do
-      User.should_receive(:find_using_perishable_token).with('some_token').and_return(@user)
+      User.expects(:find_using_perishable_token).with('some_token').returns(@user)
       get :edit, :id => 'some_token'
     end
     
     it "should redirect to root when user cannot be found" do
-      User.stub!(:find_using_perishable_token).and_return(nil)
+      User.stubs(:find_using_perishable_token).returns(nil)
       get :edit
       response.should redirect_to(root_path)
     end
@@ -63,10 +63,10 @@ describe PasswordResetsController do
   describe "PUT /password_reset?id=SOME_PERISHABLE_TOKEN" do
     before(:each) do
       @user = mock_model(User)
-      @user.stub!(:password=)
-      @user.stub!(:password_confirmation=)
-      @user.stub!(:save).and_return(true)
-      User.stub!(:find_using_perishable_token).and_return(@user)
+      @user.stubs(:password=)
+      @user.stubs(:password_confirmation=)
+      @user.stubs(:save).returns(true)
+      User.stubs(:find_using_perishable_token).returns(@user)
     end
     
     def do_put
@@ -74,18 +74,18 @@ describe PasswordResetsController do
     end
     
     it "should look for user using perishable token" do
-      User.should_receive(:find_using_perishable_token).with('some_token').and_return(@user)
+      User.expects(:find_using_perishable_token).with('some_token').returns(@user)
       put :update, :id => 'some_token', :user => {}      
     end
     
     it "should redirect to root when user cannot be found" do
-      User.stub!(:find_using_perishable_token).and_return(nil)
+      User.stubs(:find_using_perishable_token).returns(nil)
       do_put
       response.should redirect_to(root_path)
     end
     
     it "should render password reset form when user cannot be updated" do
-      @user.stub!(:save).and_return(false)
+      @user.stubs(:save).returns(false)
       do_put
       response.should render_template('edit')
     end

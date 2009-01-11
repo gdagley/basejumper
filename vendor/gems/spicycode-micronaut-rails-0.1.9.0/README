@@ -1,0 +1,26 @@
+= Micronaut Rails
+
+* http://github.com/spicycode/micronaut-rails
+* http://relevance.lighthouseapp.com/projects/22819-micronaut
+
+== DESCRIPTION:
+
+Micronaut Rails is a set of extension to deal with rails mode testing. For the moment think of it is a prototype of
+RSpec lite.  Definitely pre alpha at the moment.
+
+== REQUIREMENTS:
+
+* Ruby 1.8.6+
+* ActionPack
+*  Micronaut (via spicycode-micronaut on GitHub) -- version numbers are kept in sync, excluding the fourth version part.  So 
+		micronaut-rails 0.1.7.5 should be compatible with micronaut 0.1.7, but micronaut-rails 0.1.8.0 would require micronaut >= 0.1.8.
+
+== ISSUES
+
+* No support for pure Rails fixtures, and no plans to add it - we use Factory Girl/Fixture Replacement instead, so send a patch if you want support for this).
+* No support for Rails integration tests -- use Cucumber (http://github.com/aslakhellesoy/cucumber) instead!
+* In use in real-world projects on Rails 2.2+ - older versions may have issues.
+
+== CREDITS:
+
+* RSpec for the great ideas and matchers
