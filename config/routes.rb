@@ -19,5 +19,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.static '/:action', :controller => 'static'
+  map.comatose_admin 
+  map.comatose_root ''
 end

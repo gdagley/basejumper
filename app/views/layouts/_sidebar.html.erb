@@ -1,8 +1,8 @@
 <div id='sidebar'>
   <ul>
-    <li><%= link_to "About", static_path(:action => 'about') %></li>
-    <li><%= link_to "FAQ", static_path(:action => 'faq') %></li>
-    <li><%= link_to "Privacy", static_path(:action => 'privacy') %></li>
+    <li><%= link_to "About", '/about' %></li>
+    <li><%= link_to "FAQ", '/faq' %></li>
+    <li><%= link_to "Privacy", '/privacy' %></li>
     <li><%= link_to "Contact", contact_path %></li>
   </ul>
   <% if current_user %>
@@ -10,4 +10,6 @@
     <li><%= link_to 'Admin', admin_path %></li>
   </ul>
   <% end %>
+  
+  <%= render :comatose => '_shared/sidebar-example' %>
 </div>
