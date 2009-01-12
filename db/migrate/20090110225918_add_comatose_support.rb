@@ -6,6 +6,10 @@ end
 
 class AddComatoseSupport < ActiveRecord::Migration
 
+  def self.lorem_content(count = 3)
+    Faker::Lorem.paragraphs(count).join("\n\n")
+  end
+  
   # Schema for Comatose version 0.7+
   def self.up
     create_table :comatose_pages do |t|
@@ -26,19 +30,19 @@ class AddComatoseSupport < ActiveRecord::Migration
     ComatosePage.create_versioned_table
     
     puts "Creating the default 'Home Page'..."
-    home = ComatosePage.create( :title=>'Home Page', :body=>"h1. Welcome\n\nYour content goes here... Log in and see Admin -> Content Management", :author=>'System' )
+    home = ComatosePage.create( :title=>'Home Page', :body=>"h1. Welcome\n\nYour content goes here... Log in and see Admin -> Content Management\n\n#{lorem_content}", :author=>'System' )
     puts "Creating the default '_shared'..."
     shared = ComatosePage.create( :parent_id => home.id, :full_path => '_shared', :title=>'_shared', :slug => '_shared', :body=>"Content beneath this page will be used as partials throughout the system and not full pages.", :author=>'System' )
     puts "Creating the default '_shared/sidebar-example'..."
-    ComatosePage.create( :parent_id => shared.id, :full_path => '_shared/sidebar-example', :title=>'sidebar-example', :slug => 'sidebar-example', :body=>"h3. Sidebar Example\n\nThis is an example of some content that could go in the sidebar\n\nAnd another paragraph to go with it.", :author=>'System' )
+    ComatosePage.create( :parent_id => shared.id, :full_path => '_shared/sidebar-example', :title=>'sidebar-example', :slug => 'sidebar-example', :body=>"h3. Sidebar Example\n\nThis is an example of some content that could go in the sidebar\n\n#{lorem_content(1)}", :author=>'System' )
     puts "Creating the default '404'..."
     ComatosePage.create( :parent_id => home.id, :full_path => '404', :title=>'Page Not Found', :slug => '404', :body=>"We could not find what you were looking for.", :author=>'System' )
     puts "Creating the default 'About'..."
-    ComatosePage.create( :parent_id => home.id, :full_path => 'about', :title=>'About', :slug => 'about', :body=>"Your 'About' page goes here.", :author=>'System' )
+    ComatosePage.create( :parent_id => home.id, :full_path => 'about', :title=>'About', :slug => 'about', :body=>"Your 'About' page goes here.\n\n#{lorem_content}", :author=>'System' )
     puts "Creating the default 'FAQ'..."
-    ComatosePage.create( :parent_id => home.id, :full_path => 'faq', :title=>'Frequently Asked Questions', :slug => 'faq', :body=>"Your 'FAQ' page goes here.", :author=>'System' )
+    ComatosePage.create( :parent_id => home.id, :full_path => 'faq', :title=>'Frequently Asked Questions', :slug => 'faq', :body=>"Your 'FAQ' page goes here.\n\n#{lorem_content}", :author=>'System' )
     puts "Creating the default 'Privacy'..."
-    ComatosePage.create( :parent_id => home.id, :full_path => 'privacy', :title=>'Privacy Policy', :slug => 'privacy', :body=>"Your 'Privacy Policy' page goes here.", :author=>'System' )
+    ComatosePage.create( :parent_id => home.id, :full_path => 'privacy', :title=>'Privacy Policy', :slug => 'privacy', :body=>"Your 'Privacy Policy' page goes here.\n\n#{lorem_content}", :author=>'System' )
   end
 
   def self.down
