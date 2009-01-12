@@ -11,7 +11,7 @@ h2. What is included?
 * micro CMS for static content (About, FAQ, Privacy)
 * Contact Us form
 * Basic styling using Blueprint CSS
-* Spec driven development using RSpec, without fixtures
+* Spec driven development using micronaut, without fixtures
 * ActiveScaffold admin interface
 * Application configuration file
 * Blueprint CSS styling
