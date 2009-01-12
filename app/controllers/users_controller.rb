@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(params[:user])
+    @user.admin = User.count.zero?
     if @user.save
       flash[:success] = "Account registered!"
       redirect_back_or_default account_path

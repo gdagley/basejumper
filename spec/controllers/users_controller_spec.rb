@@ -10,7 +10,7 @@ describe UsersController do
   
   describe "POST /registration" do
     before(:each) do
-      @user = mock_model(User)
+      @user = mock_model(User, :admin= => nil)
       User.stub!(:new).and_return(@user)
       @user.stub!(:save).and_return(true)
     end

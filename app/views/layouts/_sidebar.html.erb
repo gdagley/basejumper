@@ -5,7 +5,7 @@
     <li><%= link_to "Privacy", '/privacy' %></li>
     <li><%= link_to "Contact", contact_path %></li>
   </ul>
-  <% if current_user %>
+  <% if current_user && current_user.admin? %>
   <ul>
     <li><%= link_to 'Admin', admin_path %></li>
   </ul>

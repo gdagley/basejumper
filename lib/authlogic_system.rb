@@ -9,14 +9,22 @@ module AuthlogicSystem
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.record
     end
-  
+    
     def require_user
-      unless current_user
-        store_location
-        flash[:notice] = "You must be logged in to access this page"
-        redirect_to login_path
+      unless current_user && authorized?
+        access_denied
         return false
       end
+    end
+    
+    def access_denied
+      store_location
+      flash[:notice] = "You do not have access to this page"
+      redirect_to login_path
+    end
+    
+    def authorized?
+      true
     end
 
     def require_no_user
