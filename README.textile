@@ -8,7 +8,7 @@ h2. What is included?
 
 * Authentication (including password reset)
 * Welcome page placeholder
-* Static content placeholders (About, FAQ, Privacy)
+* micro CMS for static content (About, FAQ, Privacy)
 * Contact Us form
 * Basic styling using Blueprint CSS
 * Spec driven development using RSpec, without fixtures
@@ -47,6 +47,10 @@ h2. Plugins
 h3. active_form
 
 Easy AR validations for non-AR models (for those Contact Us forms)
+
+h3. comatose
+
+A micro CMS for managing full pages and snippets of content
 
 h3. active_scaffold
 
