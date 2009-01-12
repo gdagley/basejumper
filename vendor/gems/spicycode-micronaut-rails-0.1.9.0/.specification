@@ -1,0 +1,101 @@
+--- !ruby/object:Gem::Specification 
+name: spicycode-micronaut-rails
+version: !ruby/object:Gem::Version 
+  version: 0.1.9.0
+platform: ruby
+authors: 
+- Chad Humphries
+autorequire: micronaut-rails
+bindir: bin
+cert_chain: []
+
+date: 2009-01-10 00:00:00 -06:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: actionpack
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 2.2.2
+    version: 
+- !ruby/object:Gem::Dependency 
+  name: spicycode-micronaut
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 0.1.9
+    version: 
+description: An excellent replacement for the wheel...
+email: chad@spicycode.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README
+- LICENSE
+- RSPEC-LICENSE
+files: 
+- LICENSE
+- README
+- RSPEC-LICENSE
+- Rakefile
+- lib/micronaut
+- lib/micronaut/rails
+- lib/micronaut/rails/configuration.rb
+- lib/micronaut/rails/controllers.rb
+- lib/micronaut/rails/extensions
+- lib/micronaut/rails/extensions/active_record.rb
+- lib/micronaut/rails/helpers.rb
+- lib/micronaut/rails/matchers
+- lib/micronaut/rails/matchers/controllers
+- lib/micronaut/rails/matchers/controllers/redirect_to.rb
+- lib/micronaut/rails/matchers/controllers/render_template.rb
+- lib/micronaut/rails/mocking
+- lib/micronaut/rails/mocking/model_stubber.rb
+- lib/micronaut/rails/mocking/with_mocha.rb
+- lib/micronaut/rails/mocking/with_rr.rb
+- lib/micronaut/rails/transactional_database_support.rb
+- lib/micronaut/rails/version.rb
+- lib/micronaut-rails.rb
+- examples/example_helper.rb
+- examples/lib
+- examples/lib/micronaut
+- examples/lib/micronaut/rails
+- examples/lib/micronaut/rails/configuration_example.rb
+- examples/lib/micronaut-rails_example.rb
+has_rdoc: true
+homepage: http://spicycode.com
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.1
+signing_key: 
+specification_version: 2
+summary: An excellent replacement for the wheel...
+test_files: []
+

@@ -12,14 +12,14 @@ describe ContactsController do
   describe "POST /contact" do
     before(:each) do
       @contact = mock_model(Contact)
-      @contact.stub!(:valid?).and_return(true)
-      Contact.stub!(:new).and_return(@contact)
-      Notifier.stub!(:deliver_contact)
+      @contact.stubs(:valid?).returns(true)
+      Contact.stubs(:new).returns(@contact)
+      Notifier.stubs(:deliver_contact)
     end
     
     describe "with invalid contact info" do
       it "should re-render contact form" do
-        @contact.should_receive(:valid?).and_return(false)
+        @contact.expects(:valid?).returns(false)
         post :create
         response.should render_template('show')
       end
@@ -27,7 +27,7 @@ describe ContactsController do
     
     describe "with valid contact info" do
       it "should deliver email" do
-        Notifier.should_receive(:deliver_contact)
+        Notifier.expects(:deliver_contact)
         post :create
       end
     

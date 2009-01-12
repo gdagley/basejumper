@@ -10,19 +10,19 @@ describe UserSessionsController do
   
   describe "POST /user_session" do
     before(:each) do
-      UserSession.stub!(:find).and_return(nil)
+      UserSession.stubs(:find).returns(nil)
       @user_session = mock_model(UserSession)
-      UserSession.stub!(:new).and_return(@user_session)
+      UserSession.stubs(:new).returns(@user_session)
     end
 
     it "should re-render login form when user session cannot be created" do
-      @user_session.stub!(:save).and_return(false)
+      @user_session.stubs(:save).returns(false)
       post :create
       response.should render_template("new")
     end
     
     it "should redirect to the user's account after logging in" do
-      @user_session.stub!(:save).and_return(true)
+      @user_session.stubs(:save).returns(true)
       post :create
       response.should redirect_to(account_path)
     end
@@ -31,11 +31,11 @@ describe UserSessionsController do
   describe "GET /logout" do
     before(:each) do
       @user_session = login_as(mock_model(User))
-      @user_session.stub!(:destroy)
+      @user_session.stubs(:destroy)
     end
     
     it "should destroy the current user session" do
-      @user_session.should_receive(:destroy)
+      @user_session.expects(:destroy)
       get :destroy
     end
     

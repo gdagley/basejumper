@@ -10,13 +10,13 @@ describe UsersController do
   
   describe "POST /registration" do
     before(:each) do
-      @user = mock_model(User, :admin= => nil)
-      User.stub!(:new).and_return(@user)
-      @user.stub!(:save).and_return(true)
+      @user = mock_model(User, :admin= => true)
+      User.stubs(:new).returns(@user)
+      @user.stubs(:save).returns(true)
     end
     
     it "should re-render new user form when user is not saved" do
-      @user.stub!(:save).and_return(false)
+      @user.stubs(:save).returns(false)
       post :create
       response.should render_template("new")
     end
@@ -64,7 +64,7 @@ describe UsersController do
     it "should re-render user form when user cannot be saved" do
       user = mock_model(User)
       login_as(user)
-      user.stub!(:update_attributes).and_return(false)
+      user.stubs(:update_attributes).returns(false)
       put :update
       response.should render_template('edit')
     end
@@ -72,7 +72,7 @@ describe UsersController do
     it "should redirect to account after user is updated" do
       user = mock_model(User)
       login_as(user)
-      user.stub!(:update_attributes).and_return(true)
+      user.stubs(:update_attributes).returns(true)
       put :update
       response.should redirect_to(account_path)
     end
