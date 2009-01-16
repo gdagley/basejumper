@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: spicycode-micronaut-rails
 version: !ruby/object:Gem::Version 
-  version: 0.1.9.0
+  version: 0.2.0.0
 platform: ruby
 authors: 
 - Chad Humphries
@@ -9,7 +9,7 @@ autorequire: micronaut-rails
 bindir: bin
 cert_chain: []
 
-date: 2009-01-10 00:00:00 -06:00
+date: 2009-01-12 00:00:00 -06:00
 default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -28,11 +28,11 @@ dependencies:
   version_requirement: 
   version_requirements: !ruby/object:Gem::Requirement 
     requirements: 
-    - - ">="
+    - - ~>
       - !ruby/object:Gem::Version 
-        version: 0.1.9
+        version: 0.2.0
     version: 
-description: An excellent replacement for the wheel...
+description: An excellent replacement for the wheel, Rails edition.
 email: chad@spicycode.com
 executables: []
 
@@ -72,7 +72,7 @@ files:
 - examples/lib/micronaut/rails/configuration_example.rb
 - examples/lib/micronaut-rails_example.rb
 has_rdoc: true
-homepage: http://spicycode.com
+homepage: http://github.com/spicycode/micronaut-rails
 post_install_message: 
 rdoc_options: []
 
@@ -96,6 +96,6 @@ rubyforge_project:
 rubygems_version: 1.3.1
 signing_key: 
 specification_version: 2
-summary: An excellent replacement for the wheel...
+summary: An excellent replacement for the wheel, Rails edition.
 test_files: []
 

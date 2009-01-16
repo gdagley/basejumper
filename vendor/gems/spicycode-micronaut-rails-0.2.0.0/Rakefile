@@ -7,8 +7,8 @@ GEM = "micronaut-rails"
 GEM_VERSION = Micronaut::Rails::Version::STRING
 AUTHOR = "Chad Humphries"
 EMAIL = "chad@spicycode.com"
-HOMEPAGE = "http://spicycode.com"
-SUMMARY = "An excellent replacement for the wheel..."
+HOMEPAGE = "http://github.com/spicycode/micronaut-rails"
+SUMMARY = "An excellent replacement for the wheel, Rails edition."
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
