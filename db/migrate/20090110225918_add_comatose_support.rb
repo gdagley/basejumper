@@ -30,7 +30,7 @@ class AddComatoseSupport < ActiveRecord::Migration
     ComatosePage.create_versioned_table
     
     puts "Creating the default 'Home Page'..."
-    home = ComatosePage.create( :title=>'Home Page', :body=>"h1. Welcome\n\nYour content goes here... Log in and see Admin -> Content Management\n\n#{lorem_content}", :author=>'System' )
+    home = ComatosePage.create( :title=>'Home Page', :body=>"Your content goes here... Log in and see Admin -> Content Management\n\n#{lorem_content}", :author=>'System' )
     puts "Creating the default '_shared'..."
     shared = ComatosePage.create( :parent_id => home.id, :full_path => '_shared', :title=>'_shared', :slug => '_shared', :body=>"Content beneath this page will be used as partials throughout the system and not full pages.", :author=>'System' )
     puts "Creating the default '_shared/sidebar-example'..."
