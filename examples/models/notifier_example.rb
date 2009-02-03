@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../example_helper'
 
 describe Notifier do
   describe "sending password reset instructions" do

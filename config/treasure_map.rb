@@ -2,30 +2,30 @@
 map_for(:default_dungeon) do |wizard|
   
   # these are the directories we will be watching
-  wizard.keep_a_watchful_eye_for 'app', 'config', 'lib', 'spec'
+  wizard.keep_a_watchful_eye_for 'app', 'config', 'lib', 'example'
  
-  # changes to files in app directory will run the corresponding spec in the spec directory
+  # changes to files in app directory will run the corresponding example in the example directory
   wizard.prepare_spell_for /\/app\/(.*)\.rb/ do |spell_component|
-    ["spec/#{spell_component[1]}_spec.rb"]
+    ["example/#{spell_component[1]}_example.rb"]
   end
   
-  # changes files in the lib directory will run the corresponding spec in the spec/lib directory
+  # changes files in the lib directory will run the corresponding example in the example/lib directory
   wizard.prepare_spell_for /\/lib\/(.*)\.rb/ do |spell_component|
-    ["spec/lib/#{spell_component[1]}_spec.rb"]
+    ["example/lib/#{spell_component[1]}_example.rb"]
   end
   
-  # changes files in the spec directory will re-run the spec
-  wizard.prepare_spell_for /\/spec\/(.*)_spec\.rb/ do |spell_component|
-    ["spec/#{spell_component[1]}_spec.rb"]
+  # changes files in the example directory will re-run the example
+  wizard.prepare_spell_for /\/example\/(.*)_example\.rb/ do |spell_component|
+    ["example/#{spell_component[1]}_example.rb"]
   end
   
-  # changes to the spec_helper will re-run all specs
-  wizard.prepare_spell_for /\/spec\/spec_helper\.rb/ do |spell_component|
-    Dir["spec/**/*_spec.rb"]
+  # changes to the example_helper will re-run all examples
+  wizard.prepare_spell_for /\/example\/example_helper\.rb/ do |spell_component|
+    Dir["example/**/*_example.rb"]
   end
 
-  # changes to anything in the config directory will re-run all specs
+  # changes to anything in the config directory will re-run all examples
   wizard.prepare_spell_for /\/config/ do
-    Dir["spec/**/*_spec.rb"]
+    Dir["example/**/*_example.rb"]
   end
 end
