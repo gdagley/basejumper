@@ -15,7 +15,7 @@ describe Notifier do
       @mail.from.should include(configatron.accounts_email)
     end
     
-    it "should be sent to user's email" do
+    fit "should be sent to user's email" do
       @mail.to.should include(@user.email)
     end
     
