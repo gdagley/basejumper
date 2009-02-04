@@ -9,7 +9,7 @@ describe User do
     end
     
     it "should reset the perishable token" do
-      @user.expects(:reset_perishable_token!)
+      @user.expects(:reset_periable_token!)
       @user.deliver_password_reset_instructions!
     end
     
