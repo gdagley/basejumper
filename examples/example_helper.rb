@@ -29,14 +29,14 @@ Micronaut.configure do |config|
   config.include(AuthlogicSpecHelper)
   
   rubygem_gem_paths.each { |gem_path_regex| config.backtrace_clean_patterns << gem_path_regex }
-  
+    
   config.alias_example_to :they
   config.alias_example_to :fit, :focused => true
   config.alias_example_to :xit, :disabled => true
-  
+    
   config.mock_with :mocha
   config.color_enabled = not_in_editor?
-  # config.formatter = :documentation
+  config.formatter = :documentation
   # config.profile_examples = true
   # config.filter_run :focused => true
   config.rails.enable_helper_support :behaviour => { :describes => lambda { |dt| dt.to_s.ends_with?('Helper') } }
