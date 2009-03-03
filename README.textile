@@ -4,6 +4,8 @@ There are others, I know, but this is how I like my apps to start out.  You prob
 
 Based on the Authlogic sample app (http://github.com/binarylogic/authlogic_example), password_resets branch.
 
+Blog post: http://www.mckinneystation.com/2009/02/22/basejumper-yet-another-starter-application
+Github source: http://github.com/gdagley/basejumper
 Check out the build status at: http://runcoderun.com/gdagley/basejumper
 
 h2. What is included?
