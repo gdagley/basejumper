@@ -11,6 +11,7 @@ Rails::Initializer.run do |config|
 
   config.gem 'spicycode-micronaut', :lib => 'micronaut', :source => 'http://gems.github.com'
   config.gem 'spicycode-micronaut-rails', :lib => 'micronaut-rails', :source => 'http://gems.github.com'
+  config.gem 'mocha'
 
   config.gem 'populator'
   config.gem 'faker'
