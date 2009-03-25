@@ -20,15 +20,16 @@ module ActiveScaffold::DataStructures
     end
 
     # the display-name of the column. this will be used, for instance, as the column title in the table and as the field name in the form.
+    # if left alone it will utilize human_attribute_name which includes localization
     attr_writer :label
     def label
-      as_(@label)
+      as_(@label) || active_record_class.human_attribute_name(name.to_s)
     end
 
     # a textual description of the column and its contents. this will be displayed with any associated form input widget, so you may want to consider adding a content example.
     attr_writer :description
     def description
-      as_(@description) if @description
+      @description.is_a?(Symbol) ? as_(@description, {:scope => [:activerecord, :attributes, active_record_class.to_s.underscore.to_sym]}) : as_(@description) if @description
     end
 
     # this will be /joined/ to the :name for the td's class attribute. useful if you want to style columns on different ActiveScaffolds the same way, but the columns have different names.
@@ -112,7 +113,7 @@ module ActiveScaffold::DataStructures
       if action.is_a? ActiveScaffold::DataStructures::ActionLink
         @link = action
       else
-        options[:label] ||= @label
+        options[:label] ||= self.label
         options[:position] ||= :after unless options.has_key?(:position)
         options[:type] ||= :record
         @link = ActiveScaffold::DataStructures::ActionLink.new(action, options)
@@ -160,6 +161,16 @@ module ActiveScaffold::DataStructures
     def associated_number?
       @associated_number
     end
+
+    # whether a blank row must be shown in the subform
+    cattr_accessor :show_blank_record
+    @@show_blank_record = true
+    attr_accessor :show_blank_record
+
+    # methods for automatic links in singular association columns
+    cattr_accessor :actions_for_association_links
+    @@actions_for_association_links = [:new, :edit, :show]
+    attr_accessor :actions_for_association_links
 
     # ----------------------------------------------------------------- #
     # the below functionality is intended for internal consumption only #
@@ -212,16 +223,18 @@ module ActiveScaffold::DataStructures
       @weight = 0
       @associated_limit = self.class.associated_limit
       @associated_number = self.class.associated_number
+      @show_blank_record = self.class.show_blank_record
+      @actions_for_association_links = self.class.actions_for_association_links if @association
 
       # default all the configurable variables
-      self.label = @column.human_name unless @column.nil?
-      self.label ||= self.name.to_s.titleize
       self.css_class = ''
       if active_record_class.respond_to? :reflect_on_validations_for
-        column_name = name
-        column_name = @association.primary_key_name if @association
-        self.required = active_record_class.reflect_on_validations_for(column_name.to_sym).any? do |val|
-          val.macro == :validates_presence_of or (val.macro == :validates_inclusion_of and not val.options[:allow_nil] and not val.options[:allow_blank])
+        column_names = [name]
+        column_names << @association.primary_key_name if @association
+        self.required = column_names.any? do |column_name|
+          active_record_class.reflect_on_validations_for(column_name.to_sym).any? do |val|
+            val.macro == :validates_presence_of or (val.macro == :validates_inclusion_of and not val.options[:allow_nil] and not val.options[:allow_blank])
+          end
         end
       else
         self.required = false

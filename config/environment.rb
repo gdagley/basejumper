@@ -9,8 +9,8 @@ Rails::Initializer.run do |config|
   
   config.gem 'relevance-log_buddy', :lib => 'log_buddy', :source => 'http://gems.github.com'
 
-  config.gem 'spicycode-micronaut', :lib => 'micronaut', :source => 'http://gems.github.com'
-  config.gem 'spicycode-micronaut-rails', :lib => 'micronaut-rails', :source => 'http://gems.github.com'
+  config.gem 'rspec', :lib => 'spec'
+  config.gem 'rspec-rails', :lib => 'spec/rails'
   config.gem 'mocha'
 
   config.gem 'populator'

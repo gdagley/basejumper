@@ -1,20 +1,12 @@
 class ActiveForm
   def initialize(attributes = nil)
     # Mass Assignment implementation
-    self.attributes = attributes if attributes
+    if attributes
+      attributes.each do |key, value| 
+        self[key] = value 
+      end
+    end
     yield self if block_given?
-  end
-  
-  def attributes=(attributes)
-    attributes.each do |key,value|
-      send(key.to_s + '=', value)
-    end if attributes
-  end
-  
-  def attributes
-    attributes = instance_variables
-    attributes.delete("@errors")
-    Hash[*attributes.collect { |attribute| [attribute[1..-1], instance_variable_get(attribute)] }.flatten]
   end
   
   def [](key)
@@ -55,7 +47,7 @@ class ActiveForm
   alias update_attributes raise_not_implemented_error
   
   class <<self
-    def self_and_descendents_from_active_record
+    def self_and_descendants_from_active_record
       [self]
     end
 

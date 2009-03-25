@@ -36,11 +36,11 @@ module ActionView #:nodoc:
 
         # paths previous to current template_path must be ignored to avoid infinite loops when is called twice or more
         index = 0
-        controller.class.view_paths.each_with_index do |active_scaffold_template_path, i|
+        controller.class.active_scaffold_paths.each_with_index do |active_scaffold_template_path, i|
           index = i + 1 and break if template_path.include? active_scaffold_template_path
         end
 
-        controller.class.view_paths.slice(index..-1).each do |active_scaffold_template_path|
+        controller.class.active_scaffold_paths.slice(index..-1).each do |active_scaffold_template_path|
           active_scaffold_template = File.join(active_scaffold_template_path, template)
           return render(:file => active_scaffold_template, :locals => options[:locals]) if File.file? active_scaffold_template
         end
@@ -68,6 +68,18 @@ module ActionView #:nodoc:
         return File.dirname(partial_path), File.basename(partial_path)
       else
         return controller.class.controller_path, partial_path
+      end
+    end
+    
+    # This is the template finder logic, keep it updated with however we find stuff in rails
+    # currently this very similar to the logic in ActionBase::Base.render for options file
+    # TODO: Work with rails core team to find a better way to check for this.
+    def template_exists?(template_name, template_format = nil)
+      begin
+        self.view_paths.find_template(template_name, template_format)
+        return true
+      rescue ActionView::MissingTemplate => e
+        return false
       end
     end
   end

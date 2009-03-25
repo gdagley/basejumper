@@ -21,11 +21,11 @@ module ActiveScaffold
           value = record.send(column.name)
 
           if column.association.nil? or column_empty?(value)
-            formatted_value = clean_column_value(format_column(value))
+            formatted_value = clean_column_value(format_value(value, column.options))
           else
             case column.association.macro
               when :has_one, :belongs_to
-                formatted_value = clean_column_value(format_column(value.to_label))
+                formatted_value = clean_column_value(format_value(value.to_label))
 
               when :has_many, :has_and_belongs_to_many
                 if column.associated_limit.nil?
@@ -34,7 +34,7 @@ module ActiveScaffold
                   firsts = value.first(column.associated_limit + 1).collect { |v| v.to_label }
                   firsts[column.associated_limit] = '…' if firsts.length > column.associated_limit
                 end
-                formatted_value = clean_column_value(format_column(firsts.join(', ')))
+                formatted_value = clean_column_value(format_value(firsts.join(', ')))
                 formatted_value << " (#{value.length})" if column.associated_number? and column.associated_limit and firsts.length > column.associated_limit
                 formatted_value
             end
@@ -56,10 +56,10 @@ module ActiveScaffold
           if column.singular_association? and column_empty?(text)
             column_model = column.association.klass
             controller_actions = active_scaffold_config_for(column_model).actions
-            if controller_actions.include?(:create) and column_model.authorized_for?(:action => :create)
+            if controller_actions.include?(:create) and column.actions_for_association_links.include? :new and column_model.authorized_for?(:action => :create)
               link.action = 'new'
               link.crud_type = :create
-              text = as_('Create New')
+              text = as_(:create_new)
             end
           end
           return "<a class='disabled'>#{text}</a>" unless record.authorized_for?(:action => column.link.crud_type)
@@ -72,10 +72,7 @@ module ActiveScaffold
               url_options.delete :id
               url_options[:parent_id] = record.id
               url_options[:parent_column] = column.association.reverse
-              constraints = {url_options[:parent_column].to_sym => url_options[:parent_id]}
-              eid = Digest::MD5.hexdigest(params[:controller] + params[:parent_controller].to_s + constraints.to_s)
-              session["as:#{eid}"] = {:constraints => constraints}
-              url_options[:eid] = eid
+              url_options[:parent_model] = record.class.name # needed for polymorphic associations
             end
           end
 
@@ -105,13 +102,14 @@ module ActiveScaffold
 
       def active_scaffold_column_checkbox(column, record)
         column_value = record.send(column.name)
+        checked = column_value.class.to_s.include?('Class') ? column_value : column_value == 1
         if column.inplace_edit and record.authorized_for?(:action => :update, :column => column.name)
           id_options = {:id => record.id.to_s, :action => 'update_column', :name => column.name.to_s}
           tag_options = {:tag => "span", :id => element_cell_id(id_options), :class => "in_place_editor_field"}
           script = remote_function(:method => 'POST', :url => {:controller => params_for[:controller], :action => "update_column", :column => column.name, :id => record.id.to_s, :value => !column_value, :eid => params[:eid]})
-          content_tag(:span, check_box_tag(tag_options[:id], 1, column_value || column_value == 1, {:onchange => script}) , tag_options)
+          content_tag(:span, check_box_tag(tag_options[:id], 1, checked, {:onchange => script}) , tag_options)
         else
-          check_box_tag(nil, 1, column_value || column_value == 1, :disabled => true)
+          check_box_tag(nil, 1, checked, :disabled => true)
         end
       end
 
@@ -136,26 +134,14 @@ module ActiveScaffold
       ## Formatting
       ##
 
-      def format_column(column_value)
+      def format_value(column_value, options = {})
         if column_empty?(column_value)
           active_scaffold_config.list.empty_field_text
-        elsif column_value.instance_of? Time
-          format_time(column_value)
-        elsif column_value.instance_of? Date
-          format_date(column_value)
+        elsif column_value.is_a?(Time) || column_value.is_a?(Date)
+          l(column_value, :format => options[:format] || :default)
         else
           column_value.to_s
         end
-      end
-
-      def format_time(time)
-        format = ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:default] || "%m/%d/%Y %I:%M %p"
-        time.strftime(format)
-      end
-
-      def format_date(date)
-        format = ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] || "%m/%d/%Y"
-        date.strftime(format)
       end
 
       # ==========
@@ -166,7 +152,7 @@ module ActiveScaffold
         if column.list_ui == :checkbox
           active_scaffold_column_checkbox(column, record)
         else
-          clean_column_value(format_column(value))
+          clean_column_value(format_value(value))
         end
       end
       
@@ -176,11 +162,11 @@ module ActiveScaffold
         tag_options = {:tag => "span", :id => element_cell_id(id_options), :class => "in_place_editor_field"}
         in_place_editor_options = {:url => {:controller => params_for[:controller], :action => "update_column", :column => column.name, :id => record.id.to_s},
          :with => params[:eid] ? "Form.serialize(form) + '&eid=#{params[:eid]}'" : nil,
-         :click_to_edit_text => as_("Click to edit"),
-         :cancel_text => as_("Cancel"),
-         :loading_text => as_("Loading…"),
-         :save_text => as_("Update"),
-         :saving_text => as_("Saving…"),
+         :click_to_edit_text => as_(:click_to_edit),
+         :cancel_text => as_(:cancel),
+         :loading_text => as_(:loading),
+         :save_text => as_(:update),
+         :saving_text => as_(:saving),
          :options => "{method: 'post'}",
          :script => true}.merge(column.options)
         content_tag(:span, formatted_column, tag_options) + in_place_editor(tag_options[:id], in_place_editor_options)
