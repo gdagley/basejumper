@@ -16,9 +16,9 @@
 #admin_nav ul {margin-left: 0;}
 #admin_nav ul li {display: inline;}
 
-form dt {float: left; width: 12em; margin-right: 1em; text-align: right;}
-form dd {margin-bottom: 1em;}
-form dd.buttons {margin-left: 13em;}
+form div {margin: 0 0 1.5em;}
+form div.buttons {margin: 0 0 1.5em 15em;}
+form div label {width: 15em; float:left;}
 
 .fieldWithErrors {padding: 2px; background-color: #8a1f11; display: table;}
 #errorExplanation {border: 2px solid #8a1f11; margin-bottom: 1em; background-color: #f0f0f0; }

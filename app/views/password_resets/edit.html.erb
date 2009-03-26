@@ -1,15 +1,19 @@
 <%= page_title 'Change My Password' %>
 
-<% semantic_form_for @user, :url => password_reset_path(:id => params[:id]) do |f| %>
-  <% f.fieldset do %>
-    <%= f.error_messages %>
+<% form_for @user, :url => password_reset_path(:id => params[:id]) do |f| %>
+  <%= f.error_messages %>
 
+  <div>
+    <%= f.label :password %>
     <%= f.password_field :password %>
-
+  </div>
+  
+  <div>
+    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
-
-    <dd class='buttons'>
-      <%= pretty_positive_button 'Update my password and log me in' %>
-    </dd>
-  <% end %>
+  </div>
+  
+  <div class='buttons'>
+    <%= pretty_positive_button 'Update my password and log me in' %>
+  </div>
 <% end %>

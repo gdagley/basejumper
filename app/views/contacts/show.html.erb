@@ -1,21 +1,30 @@
 <%= page_title 'Contact' %>
 
-<% semantic_form_for @contact, :url => contact_path do |f| %>
-  <% f.fieldset do %>
-    <%= f.error_messages %>
-    
+<% form_for @contact, :url => contact_path do |f| %>
+  <%= f.error_messages %>
+  
+  <div>
+    <%= f.label :name %>
     <%= f.text_field :name %>
-
+  </div>
+  
+  <div>
+    <%= f.label :email %>
     <%= f.text_field :email %>
-
+  </div>
+  
+  <div>
+    <%= f.label :subject %>
     <%= f.text_field :subject %>
-    
+  </div>
+  
+  <div>
+    <%= f.label :comment, 'Question/Comment' %>
     <%= f.text_area :comment, :label => 'Question/Comment' %>
-
-    <dd class='buttons'>
-      <%= pretty_positive_button 'Submit' %>
-      <%= pretty_button_link 'Clear', contact_path %>
-    </dd>
-    
-  <% end %>
+  </div>
+  
+  <div class='buttons'>
+    <%= pretty_positive_button 'Submit' %>
+    <%= pretty_button_link 'Clear', contact_path %>
+  </div>
 <% end %>

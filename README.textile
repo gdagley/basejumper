@@ -72,10 +72,6 @@ h3. pretty_buttons
 
 HTML buttons shouldn't have to look so bad.
 
-h3. semantic_form_builder
-
-HTML forms made easier
-
 h3. seo_helper
 
 A few useful helpers for SEO purposes.

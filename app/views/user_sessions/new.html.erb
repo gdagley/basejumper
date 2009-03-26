@@ -1,21 +1,27 @@
 <%= page_title 'Login' %>
 
-<% semantic_form_for @user_session, :url => user_session_path do |f| %>
-  <% f.fieldset do %>
-    <%= f.error_messages %>
+<% form_for @user_session, :url => user_session_path do |f| %>
+  <%= f.error_messages %>
 
+  <div>
+    <%= f.label :login %>
     <%= f.text_field :login %>
-
+  </div>
+  
+  <div>
+    <%= f.label :password %>
     <%= f.password_field :password %>
-
+  </div>
+  
+  <div>
+    <%= f.label :remember_me %>
     <%= f.check_box :remember_me %>
-
-    <dd class='buttons'>
-      <%= pretty_positive_button 'Login' %>
-      <%= pretty_negative_button_link 'Cancel', root_path %>
-    </dd>
-    
-  <% end %>
+  </div>
+  
+  <div class='buttons'>
+    <%= pretty_positive_button 'Login' %>
+    <%= pretty_negative_button_link 'Cancel', root_path %>
+  </div>
 <% end %>
 
 <p>
