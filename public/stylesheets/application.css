@@ -20,7 +20,8 @@ form div {margin: 0 0 1.5em;}
 form div.buttons {margin: 0 0 1.5em 15em;}
 form div label {width: 15em; float:left;}
 
-.fieldWithErrors {padding: 2px; background-color: #8a1f11; display: table;}
+.fieldWithErrors label {color:#8a1f11;}
+.fieldWithErrors input, .fieldWithErrors textarea {background-color:#fbe3e4;color:#8a1f11;}
 #errorExplanation {border: 2px solid #8a1f11; margin-bottom: 1em; background-color: #f0f0f0; }
 #errorExplanation h2 {background-color: #8a1f11; border-bottom: 2px solid #8a1f11; color: #FFFFFF; margin-bottom: .25em; padding-left: 10px;}
 #errorExplanation p {color: #333; margin-bottom: 0; padding-left: 10px;}
