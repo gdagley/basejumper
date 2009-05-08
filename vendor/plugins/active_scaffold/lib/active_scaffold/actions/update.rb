@@ -9,60 +9,69 @@ module ActiveScaffold::Actions
 
     def edit
       do_edit
-
       respond_to do |type|
-        type.html do
-          if successful?
-            render(:action => 'update', :layout => true)
-          else
-            return_to_main
-          end
-        end
-        type.js do
-          render(:partial => 'update_form', :layout => false)
+        edit_formats.each do |format|
+          type.send(format){ send("edit_respond_to_#{format}") }
         end
       end
     end
 
     def update
       do_update
-
       respond_to do |type|
-        type.html do
-          if params[:iframe]=='true' # was this an iframe post ?
-            responds_to_parent do
-              if successful?
-                render :action => 'on_update', :layout => false
-              else
-                render :action => 'form_messages.rjs', :layout => false
-              end
-            end
-          else # just a regular post
-            if successful?
-              flash[:info] = as_(:updated_model, :model => @record.to_label)
-              return_to_main
-            else
-              render(:action => 'update', :layout => true)
-            end
-          end
+        update_formats.each do |format|
+          type.send(format){ send("update_respond_to_#{format}") }
         end
-        type.js do
-          render :action => 'on_update', :layout => false
-        end
-        type.xml { render :xml => response_object.to_xml, :content_type => Mime::XML, :status => response_status }
-        type.json { render :text => response_object.to_json, :content_type => Mime::JSON, :status => response_status }
-        type.yaml { render :text => response_object.to_yaml, :content_type => Mime::YAML, :status => response_status }
       end
     end
 
     # for inline (inlist) editing
     def update_column
       do_update_column
-      render :action => 'update_column.rjs', :layout => false
+      render :action => 'update_column'
     end
 
     protected
-
+    def edit_respond_to_html
+      if successful?
+        render(:action => 'update')
+      else
+        return_to_main
+      end
+    end
+    def edit_respond_to_js
+      render(:partial => 'update_form')
+    end
+    def update_respond_to_html  
+      if params[:iframe]=='true' # was this an iframe post ?
+        responds_to_parent do
+          if successful?
+            render :action => 'on_update.js'
+          else
+            render :action => 'form_messages_on_update.js'
+          end
+        end
+      else # just a regular post
+        if successful?
+          flash[:info] = as_(:updated_model, :model => @record.to_label)
+          return_to_main
+        else
+          render(:action => 'update')
+        end
+      end
+    end
+    def update_respond_to_js
+      render :action => 'on_update'
+    end
+    def update_respond_to_xml
+      render :xml => response_object.to_xml, :content_type => Mime::XML, :status => response_status
+    end
+    def update_respond_to_json
+      render :text => response_object.to_json, :content_type => Mime::JSON, :status => response_status
+    end
+    def update_respond_to_yaml
+      render :text => response_object.to_yaml, :content_type => Mime::YAML, :status => response_status
+    end
     # A simple method to find and prepare a record for editing
     # May be overridden to customize the record (set default values, etc.)
     def do_edit
@@ -72,7 +81,7 @@ module ActiveScaffold::Actions
     # A complex method to update a record. The complexity comes from the support for subforms, and saving associated records.
     # If you want to customize this algorithm, consider using the +before_update_save+ callback
     def do_update
-      @record = find_if_allowed(params[:id], :update)
+      do_edit
       begin
         active_scaffold_config.model.transaction do
           @record = update_record_from_params(@record, active_scaffold_config.update.columns, params[:record])
@@ -91,9 +100,11 @@ module ActiveScaffold::Actions
     end
 
     def do_update_column
-      @record = find_if_allowed(params[:id], :update)
+      do_edit
       if @record.authorized_for?(:action => :update, :column => params[:column])
-        @record.update_attributes(params[:column] => params[:value])
+        params[:value] ||= @record.column_for_attribute(params[:column]).default unless @record.column_for_attribute(params[:column]).null
+        @record.send("#{params[:column]}=", params[:value])
+        @record.save
       end
     end
 
@@ -107,6 +118,13 @@ module ActiveScaffold::Actions
     # You may override the method to customize.
     def update_authorized?
       authorized_for?(:action => :update)
+    end
+    private
+    def edit_formats
+      (default_formats + active_scaffold_config.formats).uniq
+    end
+    def update_formats
+      (default_formats + active_scaffold_config.formats + active_scaffold_config.update.formats).uniq
     end
   end
 end

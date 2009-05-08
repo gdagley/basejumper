@@ -6,6 +6,18 @@ module ActiveScaffold::Actions
       end
     end
 
+    def render_field
+      @record = active_scaffold_config.model.new
+      column = active_scaffold_config.columns[params[:column]]
+      value = if column.association
+        params[:value].blank? ? nil : column.association.klass.find(params[:value])
+      else
+        params[:value]
+      end
+      @record.send "#{column.name}=", value
+      @update_column = active_scaffold_config.columns[column.options[:update_column]]
+    end
+
     protected
 
     def authorized_for?(*args)
@@ -20,6 +32,9 @@ module ActiveScaffold::Actions
       end
     end
 
+    def default_formats
+      [:html, :js, :json, :xml, :yaml]
+    end
     # Returns true if the client accepts one of the MIME types passed to it
     # ex: accepts? :html, :xml
     def accepts?(*types)
@@ -74,8 +89,16 @@ module ActiveScaffold::Actions
     # Override this method on your controller to define conditions to be used when querying a recordset (e.g. for List). The return of this method should be any format compatible with the :conditions clause of ActiveRecord::Base's find.
     def conditions_for_collection
     end
+  
+    # Override this method on your controller to define joins to be used when querying a recordset (e.g. for List).  The return of this method should be any format compatible with the :joins clause of ActiveRecord::Base's find.
     def joins_for_collection
     end
+  
+    # Override this method on your controller to provide custom finder options to the find() call. The return of this method should be a hash.
+    def custom_finder_options
+      {}
+    end
+  
 
     # Builds search conditions by search params for column names. This allows urls like "contacts/list?company_id=5".
     def conditions_from_params

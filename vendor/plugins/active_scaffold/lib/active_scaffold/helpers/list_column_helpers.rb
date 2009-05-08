@@ -1,3 +1,4 @@
+# coding: utf-8
 module ActiveScaffold
   module Helpers
     # Helpers that assist with the rendering of a List Column
@@ -52,34 +53,56 @@ module ActiveScaffold
       # TODO: we need to distinguish between the automatic links *we* create and the ones that the dev specified. some logic may not apply if the dev specified the link.
       def render_list_column(text, column, record)
         if column.link
-          link = column.link.clone
-          if column.singular_association? and column_empty?(text)
-            column_model = column.association.klass
-            controller_actions = active_scaffold_config_for(column_model).actions
-            if controller_actions.include?(:create) and column.actions_for_association_links.include? :new and column_model.authorized_for?(:action => :create)
-              link.action = 'new'
-              link.crud_type = :create
-              text = as_(:create_new)
-            end
-          end
-          return "<a class='disabled'>#{text}</a>" unless record.authorized_for?(:action => column.link.crud_type)
-
+          link = column.link
+          associated = record.send(column.association.name) if column.association
           url_options = params_for(:action => nil, :id => record.id, :link => text)
-          if column.singular_association? and column.link.action != 'nested'
-            if associated = record.send(column.association.name)
-              url_options[:id] = associated.id
-            elsif link.action == 'new'
-              url_options.delete :id
+          url_options[:parent_controller] = params[:controller] if link.controller and link.controller.to_s != params[:controller]
+          url_options[:id] = associated.id if associated and link.controller and link.controller.to_s != params[:controller]
+
+          # setup automatic link
+          if column.autolink # link to nested scaffold or inline form
+            link = action_link_to_inline_form(column, associated) if link.crud_type.nil? # automatic link to inline form (singular association)
+            return text if link.crud_type.nil?
+            if link.crud_type == :create
+              url_options[:link] = as_(:create_new)
               url_options[:parent_id] = record.id
               url_options[:parent_column] = column.association.reverse
               url_options[:parent_model] = record.class.name # needed for polymorphic associations
+              url_options.delete :id
             end
           end
+
+          # check authorization
+          if column.association
+            authorized = (associated ? associated : column.association.klass).authorized_for?(:action => link.crud_type)
+            authorized = authorized and record.authorized_for?(:action => :update, :column => column.name) if link.crud_type == :create
+          else
+            authorized = record.authorized_for?(:action => link.crud_type)
+          end
+          return "<a class='disabled'>#{text}</a>" unless authorized
 
           render_action_link(link, url_options)
         else
           text
         end
+      end
+
+      # setup the action link to inline form
+      def action_link_to_inline_form(column, associated)
+        link = column.link.clone
+        if column_empty?(associated) # if association is empty, we only can link to create form
+          if column.actions_for_association_links.include?(:new)
+            link.action = 'new'
+            link.crud_type = :create
+          end
+        elsif column.actions_for_association_links.include?(:edit)
+          link.action = 'edit'
+          link.crud_type = :update
+        elsif column.actions_for_association_links.include?(:show)
+          link.action = 'show'
+          link.crud_type = :read
+        end
+        link
       end
 
       # There are two basic ways to clean a column's value: h() and sanitize(). The latter is useful

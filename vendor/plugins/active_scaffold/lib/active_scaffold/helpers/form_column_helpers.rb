@@ -32,10 +32,14 @@ module ActiveScaffold
               # for textual fields we pass different options
               text_types = [:text, :string, :integer, :float, :decimal]
               options = active_scaffold_input_text_options(options) if text_types.include?(column.column.type)
+              if column.column.type == :string && options[:maxlength].blank?
+                options[:maxlength] = column.column.limit
+                options[:size] ||= ActionView::Helpers::InstanceTag::DEFAULT_FIELD_OPTIONS["size"]
+              end
               input(:record, column.name, options.merge(column.options))
             end
           end
-        end
+        end.to_s + javascript_for_update_column(column, scope, options)
       end
 
       alias form_column active_scaffold_input_for
@@ -57,7 +61,21 @@ module ActiveScaffold
 
         { :name => name, :class => "#{column.name}-input", :id => id_control}
       end
- 
+
+      def javascript_for_update_column(column, scope, options)
+        if column.options[:update_column]
+          url_params = {:action => 'render_field', :id => @record.id}
+          url_params[:controller] = controller.class.active_scaffold_controller_for(@record.class).controller_path if scope
+
+          parameters = "column=#{column.name}"
+          parameters << "&eid=#{params[:eid]}" if params[:eid]
+          parameters << "&scope=#{scope}" if scope
+          javascript_tag("$(#{options[:id].to_json}).observe('change', function(event) { new Ajax.Request(#{url_for(url_params).to_json}, {parameters: '#{parameters}&value=' + this.value, method: 'get'}); });")
+        else
+          ''
+        end
+      end
+
       ##
       ## Form input methods
       ##
@@ -77,7 +95,7 @@ module ActiveScaffold
       def active_scaffold_input_plural_association(column, options)
         associated_options = @record.send(column.association.name).collect {|r| [r.to_label, r.id]}
         select_options = associated_options | options_for_association(column.association)
-        return 'no options' if select_options.empty?
+        return content_tag(:span, as_(:no_options), :id => options[:id]) if select_options.empty?
 
         html = "<ul class=\"checkbox-list\" id=\"#{options[:id]}\">"
 
@@ -124,7 +142,7 @@ module ActiveScaffold
           params.merge!({column.association.primary_key_name => ''})
         end
         
-        record_select_options = {:controller => remote_controller, :id => options[:id], :params => params}
+        record_select_options = {:controller => remote_controller, :id => options[:id]}
         record_select_options.merge!(active_scaffold_input_text_options)
         record_select_options.merge!(column.options)
 
@@ -140,7 +158,8 @@ module ActiveScaffold
       end
 
       def active_scaffold_input_password(column, options)
-        password_field :record, column.name, active_scaffold_input_text_options(options)
+        options = active_scaffold_input_text_options(options)
+        password_field :record, column.name, options.merge(column.options)
       end
 
       def active_scaffold_input_textarea(column, options)
@@ -148,7 +167,8 @@ module ActiveScaffold
       end
 
       def active_scaffold_input_virtual(column, options)
-        text_field :record, column.name, active_scaffold_input_text_options(options)
+        options = active_scaffold_input_text_options(options)
+        text_field :record, column.name, options.merge(column.options)
       end
 
       #
@@ -172,13 +192,13 @@ module ActiveScaffold
       ##
 
       # add functionality for overriding subform partials from association class path
-      def override_subform_partial?(column)
-        path, partial_name = partial_pieces(override_subform_partial(column))
+      def override_subform_partial?(column, subform_partial)
+        path, partial_name = partial_pieces(override_subform_partial(column, subform_partial))
         template_exists?(File.join(path, "_#{partial_name}"))
       end
 
-      def override_subform_partial(column)
-        File.join(active_scaffold_controller_for(column.association.klass).controller_path, "subform") if column_renders_as(column) == :subform
+      def override_subform_partial(column, subform_partial)
+        File.join(active_scaffold_controller_for(column.association.klass).controller_path, subform_partial) if column_renders_as(column) == :subform
       end
 
       def override_form_field_partial?(column)
@@ -222,10 +242,11 @@ module ActiveScaffold
       end
 
       def subform_partial_for_column(column)
-        if override_subform_partial?(column)
-          override_subform_partial(column)
+        subform_partial = "#{active_scaffold_config_for(column.association.klass).subform.layout}_subform"
+        if override_subform_partial?(column, subform_partial)
+          override_subform_partial(column, subform_partial)
         else
-          "horizontal_subform"
+          subform_partial
         end
       end
 
