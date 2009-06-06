@@ -8,7 +8,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
-require File.join(RAILS_ROOT, "vendor/gems/spicycode-micronaut-0.2.7/lib/micronaut/rake_task")
+require File.join(RAILS_ROOT, "vendor/gems/spicycode-micronaut-0.2.9/lib/micronaut/rake_task")
 
 desc "Run all examples"
 Micronaut::RakeTask.new :examples do |t|
