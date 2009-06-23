@@ -18,4 +18,6 @@ ActionController::Routing::Routes.draw do |map|
       admin_scaffold.resources :users
     end
   end
+  
+  map.static '/:action', :controller => 'static'
 end
