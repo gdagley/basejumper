@@ -18,7 +18,4 @@ ActionController::Routing::Routes.draw do |map|
       admin_scaffold.resources :users
     end
   end
-
-  map.comatose_admin 
-  map.comatose_root ''
 end
