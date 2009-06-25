@@ -3,6 +3,7 @@ module ActiveScaffold
   class DependencyFailure < RuntimeError; end
   class MalformedConstraint < RuntimeError; end
   class RecordNotAllowed < SecurityError; end
+  class ActionNotAllowed < SecurityError; end
   class ReverseAssociationRequired < RuntimeError; end
 
   def self.included(base)
@@ -74,6 +75,7 @@ module ActiveScaffold
       end
       active_scaffold_default_frontend_path = File.join(Rails.root, 'vendor', 'plugins', ActiveScaffold::Config::Core.plugin_directory, 'frontends', 'default' , 'views')
       @active_scaffold_frontends << active_scaffold_default_frontend_path
+      @active_scaffold_custom_paths = []
 
       # include the rest of the code into the controller: the action core and the included actions
       module_eval do
@@ -83,7 +85,7 @@ module ActiveScaffold
         include ActiveScaffold::Actions::Core
         active_scaffold_config.actions.each do |mod|
           name = mod.to_s.camelize
-          include "ActiveScaffold::Actions::#{name}".constantize rescue nil
+          include "ActiveScaffold::Actions::#{name}".constantize
 
           # sneak the action links from the actions into the main set
           if link = active_scaffold_config.send(mod).link rescue nil
@@ -121,8 +123,13 @@ module ActiveScaffold
       end
     end
 
+    def add_active_scaffold_path(path)
+      @active_scaffold_paths = nil # Force active_scaffold_paths to rebuild
+      @active_scaffold_custom_paths << path
+    end
+
     def active_scaffold_paths
-      @active_scaffold_paths ||= ActionView::PathSet.new(@active_scaffold_overrides + @active_scaffold_frontends) unless @active_scaffold_overrides.nil? || @active_scaffold_frontends.nil?
+      @active_scaffold_paths ||= ActionView::PathSet.new(@active_scaffold_overrides + @active_scaffold_custom_paths + @active_scaffold_frontends) unless @active_scaffold_overrides.nil? || @active_scaffold_custom_paths.nil? || @active_scaffold_frontends.nil?
     end
 
     def active_scaffold_config

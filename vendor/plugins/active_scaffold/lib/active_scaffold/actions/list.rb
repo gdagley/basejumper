@@ -1,7 +1,7 @@
 module ActiveScaffold::Actions
   module List
     def self.included(base)
-      base.before_filter :list_authorized?, :only => [:index, :table, :update_table, :row, :list]
+      base.before_filter :list_authorized_filter, :only => [:index, :table, :update_table, :row, :list]
     end
 
     def index
@@ -16,11 +16,7 @@ module ActiveScaffold::Actions
     # This is called when changing pages, sorts and search
     def update_table
       do_list
-      respond_to do |type|
-        update_table_formats.each do |format|
-          type.send(format){ send("update_table_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:update_table)
     end
 
     # get just a single row
@@ -33,11 +29,7 @@ module ActiveScaffold::Actions
       if active_scaffold_config.list.always_show_create
         do_new
       end
-      respond_to do |type|
-        list_formats.each do |format|
-          type.send(format){ send("list_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:list)
     end
     
     protected
@@ -91,6 +83,9 @@ module ActiveScaffold::Actions
       authorized_for?(:action => :read)
     end
     private
+    def list_authorized_filter
+      raise ActiveScaffold::ActionNotAllowed unless list_authorized?
+    end
     def update_table_formats
       (default_formats + active_scaffold_config.formats).uniq
     end

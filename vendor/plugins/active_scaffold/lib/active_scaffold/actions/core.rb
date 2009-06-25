@@ -5,7 +5,6 @@ module ActiveScaffold::Actions
         after_filter :clear_flashes
       end
     end
-
     def render_field
       @record = active_scaffold_config.model.new
       column = active_scaffold_config.columns[params[:column]]
@@ -112,6 +111,25 @@ module ActiveScaffold::Actions
         end
       end
       conditions
+    end
+    private
+    def respond_to_action(action)
+      respond_to do |type|
+        send("#{action}_formats").each do |format|
+          type.send(format){ send("#{action}_respond_to_#{format}") }
+        end
+      end
+    end
+
+    def response_code_for_rescue(exception)
+      case exception
+        when ActiveScaffold::RecordNotAllowed
+          "403 Record Not Allowed"
+        when ActiveScaffold::ActionNotAllowed
+          "403 Action Not Allowed"
+        else
+          super
+      end
     end
   end
 end

@@ -13,11 +13,7 @@ module ActiveScaffold::Actions
 
     def nested
       do_nested
-      respond_to do |type|
-        nested_formats.each do |format|
-          type.send(format){ send("nested_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:nested)
     end
 
     protected
@@ -36,9 +32,9 @@ module ActiveScaffold::Actions
     def include_habtm_actions
       if nested_habtm?
         # Production mode is ok with adding a link everytime the scaffold is nested - we ar not ok with that.
-        active_scaffold_config.action_links.add('new_existing', :label => 'Add Existing', :type => :table, :security_method => :add_existing_authorized?) unless active_scaffold_config.action_links['new_existing']
+        active_scaffold_config.action_links.add('new_existing', :label => :add_existing, :type => :table, :security_method => :add_existing_authorized?) unless active_scaffold_config.action_links['new_existing']
         if active_scaffold_config.nested.shallow_delete
-          active_scaffold_config.action_links.add('destroy_existing', :label => 'Remove', :type => :record, :confirm => 'are_you_sure', :method => :delete, :position => false, :security_method => :delete_existing_authorized?) unless active_scaffold_config.action_links['destroy_existing']
+          active_scaffold_config.action_links.add('destroy_existing', :label => :remove, :type => :record, :confirm => 'are_you_sure', :method => :delete, :position => false, :security_method => :delete_existing_authorized?) unless active_scaffold_config.action_links['destroy_existing']
           active_scaffold_config.action_links.delete("destroy") if active_scaffold_config.action_links['destroy']
         end
       else
@@ -47,7 +43,7 @@ module ActiveScaffold::Actions
         
         if active_scaffold_config.nested.shallow_delete
           active_scaffold_config.action_links.delete("destroy_existing") if active_scaffold_config.action_links['destroy_existing']
-          active_scaffold_config.action_links.add('destroy', :label => 'Delete', :type => :record, :confirm => 'are_you_sure', :method => :delete, :position => false, :security_method => :delete_authorized?) unless active_scaffold_config.action_links['destroy']
+          active_scaffold_config.action_links.add('destroy', :label => :delete, :type => :record, :confirm => 'are_you_sure', :method => :delete, :position => false, :security_method => :delete_authorized?) unless active_scaffold_config.action_links['destroy']
         end
         
       end
@@ -96,30 +92,18 @@ module ActiveScaffold::Actions::Nested
 
     def new_existing
       do_new
-      respond_to do |type|
-        new_existing_formats.each do |format|
-          type.send(format){ send("new_existing_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:new_existing)
     end
 
     def add_existing
       do_add_existing
-      respond_to do |type|
-        add_existing_formats.each do |format|
-          type.send(format){ send("add_existing_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:add_existing)
     end
 
     def destroy_existing
       return redirect_to(params.merge(:action => :delete)) if request.get?
       do_destroy_existing
-      respond_to do |type|
-        destroy_existing_formats.each do |format|
-          type.send(format){ send("destroy_existing_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:destroy_existing)
     end
     
     protected

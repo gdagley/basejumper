@@ -1,16 +1,12 @@
 module ActiveScaffold::Actions
   module Search
     def self.included(base)
-      base.before_filter :search_authorized?, :only => :show_search
+      base.before_filter :search_authorized_filter, :only => :show_search
       base.before_filter :do_search
     end
 
     def show_search
-      respond_to do |type|
-        search_formats.each do |format|
-          type.send(format){ send("search_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:search)
     end
 
     protected
@@ -43,6 +39,10 @@ module ActiveScaffold::Actions
       authorized_for?(:action => :read)
     end
     private
+    def search_authorized_filter
+      link = active_scaffold_config.search.link || active_scaffold_config.search.class.link
+      raise ActiveScaffold::ActionNotAllowed unless self.send(link.security_method)
+    end
     def search_formats
       (default_formats + active_scaffold_config.formats + active_scaffold_config.search.formats).uniq
     end

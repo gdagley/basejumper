@@ -1,7 +1,7 @@
 module ActiveScaffold::Actions
   module Create
     def self.included(base)
-      base.before_filter :create_authorized?, :only => [:new, :create]
+      base.before_filter :create_authorized_filter, :only => [:new, :create]
       base.prepend_before_filter :constraints_for_nested_create, :only => [:new, :create]
       base.verify :method => :post,
                   :only => :create,
@@ -10,21 +10,13 @@ module ActiveScaffold::Actions
 
     def new
       do_new
-      respond_to do |type|
-        new_formats.each do |format|
-          type.send(format){ send("new_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:new)
     end
 
     def create
       do_create
       @insert_row = params[:parent_controller].nil?
-      respond_to do |type|
-        create_formats.each do |format|
-          type.send(format){ send("create_respond_to_#{format}") }
-        end
-      end
+      respond_to_action(:create)
     end
 
     protected
@@ -134,6 +126,10 @@ module ActiveScaffold::Actions
       authorized_for?(:action => :create)
     end
     private
+    def create_authorized_filter
+      link = active_scaffold_config.create.link || active_scaffold_config.create.class.link
+      raise ActiveScaffold::ActionNotAllowed unless self.send(link.security_method)
+    end
     def new_formats
       (default_formats + active_scaffold_config.formats).uniq
     end

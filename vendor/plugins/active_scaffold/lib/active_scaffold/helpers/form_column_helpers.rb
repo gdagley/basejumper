@@ -6,15 +6,12 @@ module ActiveScaffold
       # It does not do any rendering. It only decides which method is responsible for rendering.
       def active_scaffold_input_for(column, scope = nil)
         options = active_scaffold_input_options(column, scope)
-
         # first, check if the dev has created an override for this specific field
         if override_form_field?(column)
           send(override_form_field(column), @record, options[:name])
-
         # second, check if the dev has specified a valid form_ui for this column
         elsif column.form_ui and override_input?(column.form_ui)
           send(override_input(column.form_ui), column, options)
-
         # fallback: we get to make the decision
         else
           if column.association
@@ -64,7 +61,7 @@ module ActiveScaffold
 
       def javascript_for_update_column(column, scope, options)
         if column.options[:update_column]
-          url_params = {:action => 'render_field', :id => @record.id}
+          url_params = {:action => 'render_field', :id => params[:id]}
           url_params[:controller] = controller.class.active_scaffold_controller_for(@record.class).controller_path if scope
 
           parameters = "column=#{column.name}"
@@ -89,7 +86,7 @@ module ActiveScaffold
         selected = associated.nil? ? nil : associated.id
         method = column.association.macro == :belongs_to ? column.association.primary_key_name : column.name
         options[:name] += '[id]'
-        select(:record, method, select_options.uniq, {:selected => selected, :include_blank => as_(:_select_)}, options)
+        select(:record, method, select_options.uniq, {:selected => selected, :include_blank => as_(:_select_)}, options.merge(column.options))
       end
 
       def active_scaffold_input_plural_association(column, options)

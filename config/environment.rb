@@ -5,7 +5,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 Rails::Initializer.run do |config|
   config.gem 'configatron'
   config.gem 'authlogic'
-  config.gem 'searchlogic'
+  config.gem 'binarylogic-searchlogic', :lib => 'searchlogic'
   
   config.gem 'relevance-log_buddy', :lib => 'log_buddy', :source => 'http://gems.github.com'
 

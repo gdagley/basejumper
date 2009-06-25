@@ -35,8 +35,12 @@ module ActiveScaffold
                   firsts = value.first(column.associated_limit + 1).collect { |v| v.to_label }
                   firsts[column.associated_limit] = '…' if firsts.length > column.associated_limit
                 end
-                formatted_value = clean_column_value(format_value(firsts.join(', ')))
-                formatted_value << " (#{value.length})" if column.associated_number? and column.associated_limit and firsts.length > column.associated_limit
+                if column.associated_limit == 0
+                  formatted_value = value.length if column.associated_number?
+                else
+                  formatted_value = clean_column_value(format_value(firsts.join(', ')))
+                  formatted_value << " (#{value.length})" if column.associated_number? and column.associated_limit and firsts.length > column.associated_limit
+                end
                 formatted_value
             end
           end
@@ -120,7 +124,7 @@ module ActiveScaffold
       ## Overrides
       ##
       def active_scaffold_column_text(column, record)
-        truncate(clean_column_value(record.send(column.name)), :length => 50)
+        truncate(clean_column_value(record.send(column.name)), :length => column.options[:truncate] || 50)
       end
 
       def active_scaffold_column_checkbox(column, record)
@@ -130,7 +134,7 @@ module ActiveScaffold
           id_options = {:id => record.id.to_s, :action => 'update_column', :name => column.name.to_s}
           tag_options = {:tag => "span", :id => element_cell_id(id_options), :class => "in_place_editor_field"}
           script = remote_function(:method => 'POST', :url => {:controller => params_for[:controller], :action => "update_column", :column => column.name, :id => record.id.to_s, :value => !column_value, :eid => params[:eid]})
-          content_tag(:span, check_box_tag(tag_options[:id], 1, checked, {:onchange => script}) , tag_options)
+          content_tag(:span, check_box_tag(tag_options[:id], 1, checked, {:onclick => script}) , tag_options)
         else
           check_box_tag(nil, 1, checked, :disabled => true)
         end
