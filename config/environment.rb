@@ -4,8 +4,9 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   config.gem 'configatron'
-  config.gem 'authlogic'
-  config.gem 'binarylogic-searchlogic', :lib => 'searchlogic'
+  config.gem 'binarylogic-authlogic', :lib => 'authlogic', :source => 'http://gems.github.com'
+  config.gem 'binarylogic-searchlogic', :lib => 'searchlogic', :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   
   config.gem 'relevance-log_buddy', :lib => 'log_buddy', :source => 'http://gems.github.com'
 
