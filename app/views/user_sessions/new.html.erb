@@ -1,4 +1,4 @@
-<%= page_title 'Login' %>
+<%= page_title 'Log in' %>
 
 <% form_for @user_session, :url => user_session_path do |f| %>
   <%= f.error_messages %>
@@ -19,7 +19,7 @@
   </div>
   
   <div class='buttons clearfix'>
-    <%= pretty_positive_button 'Login' %>
+    <%= pretty_positive_button 'Log in' %>
     <%= pretty_negative_button_link 'Cancel', root_path %>
   </div>
 <% end %>

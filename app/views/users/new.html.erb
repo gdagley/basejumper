@@ -1,4 +1,4 @@
-<%= page_title 'Signup' %>
+<%= page_title 'Sign up' %>
 
 <% form_for @user, :url => account_path do |f| %>
   <%= f.error_messages %>
@@ -6,7 +6,7 @@
   <%= render :partial => "form", :object => f %>
   
   <div class='buttons clearfix'>
-    <%= pretty_positive_button 'Signup' %>
+    <%= pretty_positive_button 'Sign up' %>
     <%= pretty_negative_button_link 'Cancel', root_path %>
   </div>
 <% end %>
