@@ -1,0 +1,6 @@
+.whitespace, .white, .space, .mania, .no-semi-column { color: white; }
+.no-semi-column {
+  color: white;
+  white-space: pre;
+}
+.newlines { border: 2px solid black; }

@@ -1,0 +1,97 @@
+@import 'blueprint/screen.css';
+
+#account_bar {
+  .container;
+  text-align: right;
+  ul {
+    li {
+      display: inline; 
+      margin-left: 1em;
+    }
+  }
+}
+
+#header {
+  .container;
+  #site-title {
+    font-size: 4em; 
+    line-height: 1;
+  }
+  #site-tag {
+    font-size: 2em;
+  }
+}
+
+#content {
+  .container;
+  .clearfix;
+  #main {
+    .column;
+    .span-18;
+  }
+  #sidebar {
+    .column;
+    .span-6;
+    .last;
+  }
+  #admin_nav {
+    ul {
+      margin-left: 0;
+      li {
+        display: inline;
+      }
+    }
+  }
+}
+
+#footer {
+  .container;
+  text-align: center; 
+  font-size: .75em; 
+    color: #666;
+}
+
+form {
+  div {
+    margin: 0 0 1.5em;
+    label {
+      width: 15em; 
+      float:left;
+    }
+  }
+  div.buttons {
+    margin: 0 0 1.5em 15em;
+  }
+}
+
+.fieldWithErrors {
+  label {
+    color:#8a1f11;
+  }
+  input, textarea {
+    background-color:#fbe3e4;
+    color:#8a1f11;
+  }
+}
+
+#errorExplanation {
+  border: 2px solid #8a1f11; 
+  margin-bottom: 1em; 
+  background-color: #f0f0f0; 
+  h2 {
+    background-color: #8a1f11; 
+    border-bottom: 2px solid #8a1f11; 
+    color: #FFFFFF; 
+    margin-bottom: .25em; 
+    padding-left: 10px;
+  }
+  p {
+    color: #333; 
+    margin-bottom: 0; 
+    padding-left: 10px;
+  }
+  ul {
+    margin-bottom: 1em; 
+    padding-left: 10px;
+  }
+}
