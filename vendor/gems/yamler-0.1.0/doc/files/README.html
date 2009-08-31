@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Wed Jan 21 11:34:03 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="../classes/Yamler.html">Yamler</a> - Making YAML easy and fun to
+use with Ruby
+</p>
+<h6>===================================================================</h6>
+<p>
+Using YAML in Ruby is pretty easy, but I find myself doing several things
+every time I use YAML. First is I always seem to pass it through ERB. The
+other is that I want to pass it a binding, because I want to give it access
+to some variables or methods. Finally I sometimes end up merging several
+YAML files into one file, because other wise it would be too big and
+unwieldy to manage. Enter <a href="../classes/Yamler.html">Yamler</a>:
+</p>
+<h3>Examples:</h3>
+<pre>
+  # Renders said file through ERB, and then through YAML.load:
+  Yamler.load('/path/to/file.yml')
+
+  # Does the same as above but makes a method called say_hi
+  # available to the binding of the Yamler::Template instance.
+  Yamler.load('/path/to/file.yml') do
+    def say_hi
+      'hi'
+    end
+  end
+
+  # Renders said file through ERB, and then through YAML.load:
+  Yamler.load('/path/to/file.yml', {:locals =&gt; {:username =&gt; 'markbates'}, :foo =&gt; :bar})
+</pre>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
