@@ -7,6 +7,7 @@ Rails::Initializer.run do |config|
   config.gem 'binarylogic-authlogic', :lib => 'authlogic', :source => 'http://gems.github.com'
   config.gem 'binarylogic-searchlogic', :lib => 'searchlogic', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'gdagley-validatable_form', :lib => 'validatable_form', :source => 'http://gems.github.com'
   
   config.gem 'relevance-log_buddy', :lib => 'log_buddy', :source => 'http://gems.github.com'
 
