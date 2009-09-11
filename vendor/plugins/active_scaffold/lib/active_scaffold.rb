@@ -102,7 +102,7 @@ module ActiveScaffold
         next unless column.link.nil? and column.autolink
         if column.plural_association?
           # note: we can't create nested scaffolds on :through associations because there's no reverse association.
-          column.set_link('nested', :parameters => {:associations => column.name.to_sym}) #unless column.through_association?
+          column.set_link('nested', :parameters => {:associations => column.name.to_sym}, :html_options => {:class => column.name}) #unless column.through_association?
         elsif column.polymorphic_association?
           # note: we can't create inline forms on singular polymorphic associations
           column.clear_link
@@ -118,7 +118,7 @@ module ActiveScaffold
           column.actions_for_association_links.delete :new unless actions.include? :create
           column.actions_for_association_links.delete :edit unless actions.include? :update
           column.actions_for_association_links.delete :show unless actions.include? :show
-          column.set_link(:none, :controller => controller.controller_path, :crud_type => nil)
+          column.set_link(:none, :controller => controller.controller_path, :crud_type => nil, :html_options => {:class => column.name})
         end
       end
     end
@@ -128,8 +128,19 @@ module ActiveScaffold
       @active_scaffold_custom_paths << path
     end
 
+    def add_active_scaffold_override_path(path)
+      @active_scaffold_paths = nil # Force active_scaffold_paths to rebuild
+      @active_scaffold_overrides.unshift path
+    end
+
     def active_scaffold_paths
-      @active_scaffold_paths ||= ActionView::PathSet.new(@active_scaffold_overrides + @active_scaffold_custom_paths + @active_scaffold_frontends) unless @active_scaffold_overrides.nil? || @active_scaffold_custom_paths.nil? || @active_scaffold_frontends.nil?
+      return @active_scaffold_paths unless @active_scaffold_paths.nil?
+
+      @active_scaffold_paths = ActionView::PathSet.new
+      @active_scaffold_paths.concat @active_scaffold_overrides unless @active_scaffold_overrides.nil?
+      @active_scaffold_paths.concat @active_scaffold_custom_paths unless @active_scaffold_custom_paths.nil?
+      @active_scaffold_paths.concat @active_scaffold_frontends unless @active_scaffold_frontends.nil?
+      @active_scaffold_paths
     end
 
     def active_scaffold_config

@@ -29,7 +29,11 @@ module ActiveScaffold::DataStructures
     # a textual description of the column and its contents. this will be displayed with any associated form input widget, so you may want to consider adding a content example.
     attr_writer :description
     def description
-      @description.is_a?(Symbol) ? as_(@description, {:scope => [:activerecord, :attributes, active_record_class.to_s.underscore.to_sym]}) : as_(@description) if @description
+      if @description
+        @description
+      else
+        I18n.t name, :scope => [:activerecord, :description, active_record_class.to_s.underscore.to_sym], :default => ''
+      end
     end
 
     # this will be /joined/ to the :name for the td's class attribute. useful if you want to style columns on different ActiveScaffolds the same way, but the columns have different names.
@@ -229,7 +233,7 @@ module ActiveScaffold::DataStructures
       @associated_limit = self.class.associated_limit
       @associated_number = self.class.associated_number
       @show_blank_record = self.class.show_blank_record
-      @actions_for_association_links = self.class.actions_for_association_links if @association
+      @actions_for_association_links = self.class.actions_for_association_links.clone if @association
 
       # default all the configurable variables
       self.css_class = ''
