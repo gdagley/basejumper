@@ -10,7 +10,7 @@
 class Less::More
   DEFAULTS = {
     "production" => {
-      :compression  => true,
+      :compression  => false,
       :header       => false,
       :page_cache   => true,
     },
