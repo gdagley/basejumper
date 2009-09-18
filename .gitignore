@@ -7,4 +7,7 @@ coverage
 tmp/*
 log/*.log
 public/cache/*
+public/stylesheets/screen.css
+public/stylesheets/print.css
+public/stylesheets/ie.css
 .DS_Store
