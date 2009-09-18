@@ -25,3 +25,5 @@ Rails::Initializer.run do |config|
 end
 
 require 'authlogic_system'
+
+Less::More.compression = true # turn off compression because it breaks things (1px solid #000 becomes 1pxsolid#000)

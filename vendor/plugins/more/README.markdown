@@ -67,19 +67,33 @@ Configuration
 To set the source path (the location of your LESS files):
 
 	Less::More.source_path = "/path/to/less/files"
+	
+You can also set the destination path. Be careful with the formatting here, since this is in fact a route, and not a regular path.
 
-To set the destination path (the location of the parsed CSS files):
-
-	Less::More.destination_path = "/path/to/css/files"
+	Less::More.destination_path = "css"
 
 More can compress your files by removing extra line breaks. This is enabled by default in the `production` environment. To change this setting, set:
 
 	Less::More.compression = true
 
+If you're on a read-only file system, you can turn page caching off and use Cache-Control headers. This option is on by default on Heroku (see separate section).
+
+	Less::More.page_cache = false
+  
+More inserts headers in the generated CSS files, letting people know that the file is in fact generated and shouldn't be edited directly. This is by default only enabled in development mode. You can disable this behavior if you want to.
+
+	Less::More.header = false
+
 To configure More for a specific environment, add configuration options into the environment file, such as `config/environments/development.rb`.
 
 If you wish to apply the configuration to all environments, place them in `config/environment.rb`.
 
+Heroku
+======
+
+The plugin works out-of-the-box on Heroku.
+
+Heroku has a read-only file system, which means caching the generated CSS with page caching is not an option. Heroku supports caching with Varnish, though, which the plugin will leverage by setting Cache-Control headers so that generated CSS is cached for one month.
 
 Tasks
 =====

@@ -7,8 +7,6 @@ end
 
 require File.join(File.dirname(__FILE__), 'lib', 'more')
 
-if ["production", "test"].include? Rails.env
-  config.after_initialize { Less::More.parse }
-else
-  ActionController::Base.before_filter { Less::More.parse }
-end
+config.after_initialize {
+  LessCacheController.expire_page("/stylesheets/test.css")
+}
