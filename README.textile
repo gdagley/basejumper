@@ -2,11 +2,16 @@ h1. BaseJumper
 
 There are others, I know, but this is how I like my apps to start out.  You probably won't like it, so move along.
 
-Based on the Authlogic sample app (http://github.com/binarylogic/authlogic_example), with-password-resets branch.
+Based on the Authlogic sample app ("http://github.com/binarylogic/authlogic_example":http://github.com/binarylogic/authlogic_example), with-password-resets branch.
 
-Blog post: "http://www.mckinneystation.com/2009/02/22/basejumper-yet-another-starter-application":http://www.mckinneystation.com/2009/02/22/basejumper-yet-another-starter-application
-Github source: "http://github.com/gdagley/basejumper":http://github.com/gdagley/basejumper
-Check out the build status at: "http://runcoderun.com/gdagley/basejumper":http://runcoderun.com/gdagley/basejumper Builds on Ruby 1.9.1, too!
+* Blog post: "http://www.mckinneystation.com/2009/02/22/basejumper-yet-another-starter-application":http://www.mckinneystation.com/2009/02/22/basejumper-yet-another-starter-application
+* Github source: "http://github.com/gdagley/basejumper":http://github.com/gdagley/basejumper
+* Check out the build status at: "http://runcoderun.com/gdagley/basejumper":http://runcoderun.com/gdagley/basejumper Builds on Ruby 1.9.1, too!
+
+h2. TODO
+
+* improve text coverage to 100% (rake spec:rcov)
+* use Authlogic test helpers?
 
 h2. What is included?
 
