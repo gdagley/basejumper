@@ -6,7 +6,7 @@ class Notifier < ActionMailer::Base
     from          configatron.accounts_email
     recipients    user.email
     sent_on       Time.now
-    body          :user => user
+    body          :edit_password_reset_url => edit_password_reset_url(:id => user.perishable_token)
   end
   
   def contact(contact)
