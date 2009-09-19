@@ -1,6 +1,6 @@
 <%= page_title 'Sign up' %>
 
-<% form_for @user, :url => account_path do |f| %>
+<% form_for @user, :url => registration_path do |f| %>
   <%= f.error_messages %>
   
   <%= render :partial => "form", :object => f %>
