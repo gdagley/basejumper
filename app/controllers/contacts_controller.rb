@@ -8,7 +8,7 @@ class ContactsController < ApplicationController
     if @contact.valid?
       Notifier.deliver_contact(@contact)
       flash[:success] = 'Your contact information has been submitted and someone will contact you soon.'
-      redirect_to root_path
+      redirect_to root_url
     else
       render :action => 'show'
     end
