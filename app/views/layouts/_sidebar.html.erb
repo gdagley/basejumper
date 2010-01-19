@@ -3,7 +3,7 @@
     <li><%= link_to "About", '/about' %></li>
     <li><%= link_to "FAQ", '/faq' %></li>
     <li><%= link_to "Privacy", '/privacy' %></li>
-    <li><%= link_to "Contact", contact_path %></li>
+    <li><%= link_to "Contact", web_contact_path %></li>
   </ul>
   <% if current_user && current_user.admin? %>
   <ul>

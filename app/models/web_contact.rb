@@ -1,4 +1,4 @@
-class Contact < ValidatableForm
+class WebContact < ValidatableForm
 
   form_fields :name, :email, :subject, :comment
 

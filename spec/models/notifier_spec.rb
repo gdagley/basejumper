@@ -26,10 +26,10 @@ describe Notifier do
   
   describe "website contact form" do
     before(:each) do
-      @contact = Contact.new(:name => 'Joe Smith', 
-                             :email => 'user@example.com', 
-                             :subject => 'I know a guy', 
-                             :comment => 'Lorem ipsum ...')
+      @contact = WebContact.new(:name => 'Joe Smith', 
+                                :email => 'user@example.com', 
+                                :subject => 'I know a guy', 
+                                :comment => 'Lorem ipsum ...')
       @mail = Notifier.create_contact(@contact)    
     end
   

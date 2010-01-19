@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
   map.resource  :password_reset
   map.resource  :account, :controller => 'users'
-  map.resource  :contact
+  map.resource  :web_contact
   map.resources :users
   
   map.admin '/admin', :controller => 'admin'

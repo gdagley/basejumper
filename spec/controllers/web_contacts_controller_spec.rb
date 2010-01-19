@@ -1,19 +1,19 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe ContactsController do
+describe WebContactsController do
 
-  describe "GET /contact" do
+  describe "GET /web_contact" do
     it "should load the contact form" do
       get :show
       response.should render_template('show')
     end
   end
 
-  describe "POST /contact" do
+  describe "POST /web_contact" do
     before(:each) do
-      @contact = Contact.new
+      @contact = WebContact.new
       @contact.stubs(:valid?).returns(true)
-      Contact.stubs(:new).returns(@contact)
+      WebContact.stubs(:new).returns(@contact)
       Notifier.stubs(:deliver_contact)
     end
     

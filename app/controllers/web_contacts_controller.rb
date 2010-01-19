@@ -1,10 +1,10 @@
-class ContactsController < ApplicationController
+class WebContactsController < ApplicationController
   def show
-    @contact = Contact.new
+    @contact = WebContact.new
   end
   
   def create
-    @contact = Contact.new(params[:contact])
+    @contact = WebContact.new(params[:web_contact])
     if @contact.valid?
       Notifier.deliver_contact(@contact)
       flash[:success] = 'Your contact information has been submitted and someone will contact you soon.'

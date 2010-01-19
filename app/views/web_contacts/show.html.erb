@@ -1,6 +1,6 @@
 <%= page_title 'Contact' %>
 
-<% form_for @contact, :url => contact_path do |f| %>
+<% form_for @contact, :url => web_contact_path do |f| %>
   <%= f.error_messages %>
   
   <div>
@@ -25,6 +25,6 @@
   
   <div class='buttons clearfix'>
     <%= pretty_positive_button 'Submit' %>
-    <%= pretty_button_link 'Clear', contact_path %>
+    <%= pretty_button_link 'Clear', web_contact_path %>
   </div>
 <% end %>
