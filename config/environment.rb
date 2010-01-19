@@ -4,13 +4,13 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   config.gem 'configatron'
-  config.gem 'binarylogic-authlogic', :lib => 'authlogic', :source => 'http://gems.github.com'
-  config.gem 'binarylogic-searchlogic', :lib => 'searchlogic', :source => 'http://gems.github.com'
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
-  config.gem 'gdagley-validatable_form', :lib => 'validatable_form', :source => 'http://gems.github.com'
+  config.gem 'authlogic'
+  config.gem 'searchlogic'
+  config.gem 'will_paginate'
+  config.gem 'validatable_form'
   config.gem 'less'
   
-  config.gem 'relevance-log_buddy', :lib => 'log_buddy', :source => 'http://gems.github.com'
+  config.gem 'log_buddy'
 
   config.gem 'populator', :lib => false
   config.gem 'faker', :lib => false
