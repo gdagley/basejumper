@@ -24,6 +24,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "sqlite3"
   gem "capybara"
+  gem 'rails_best_practices'
   gem "simplecov"
   gem 'factory_girl_rails'
   gem 'faker'
@@ -49,4 +50,5 @@ group :development do
     gem "guard-rspec"
     gem "guard-unicorn"
     gem "heroku_san"
+    gem 'term-ansicolor'
 end
