@@ -1,6 +1,6 @@
 # http://jessewolgamott.com/blog/2012/01/19/the-one-with-a-json-api-login-using-devise/
 
-class Api::RegistrationsController < Api::BaseController
+class Api::RegistrationsController < Api::BaseApiController
   def create
     user = User.new(params[:user])
     if user.save
