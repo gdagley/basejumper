@@ -18,10 +18,6 @@
 #
 
 class Api::SessionsController < Api::BaseApiController
-
-  skip_before_filter :verify_authenticity_token
-  respond_to :json
-
   def create
     email = params[:email]
     password = params[:password]
