@@ -1,36 +1,69 @@
-# http://jessewolgamott.com/blog/2012/01/19/the-one-with-a-json-api-login-using-devise/
+# http://matteomelani.wordpress.com/2011/10/17/authentication-for-mobile-devices/
+# https://github.com/plataformatec/devise/wiki/How-To:-Simple-Token-Authentication-Example
 
-class Api::SessionsController < Api::BaseController
-  prepend_before_filter :require_no_authentication, :only => [:create ]
-  include Devise::Controllers::InternalHelpers
+# GET
+# http://localhost:3000/courses.json?auth_token=<put your token here>
+#
 
-  before_filter :ensure_params_exist
+#
+# POST
+# http://localhost:3000/api/sessions.json
+# Content-Type:application/json
+# {
+#   "email":"user@email.com",
+#   "password":"<password>"
+# }
+#
+# return: {"token":"xXZtgecrnqCATjQ2o7cq"}
+#
+
+class Api::SessionsController < Api::BaseApiController
+
+  skip_before_filter :verify_authenticity_token
+  respond_to :json
 
   def create
-    build_resource
-    resource = User.find_for_database_authentication(:login=>params[:user_login][:login])
-    return invalid_login_attempt unless resource
+    email = params[:email]
+    password = params[:password]
 
-    if resource.valid_password?(params[:user_login][:password])
-      sign_in("user", resource)
-      render :json=> {:success=>true, :auth_token=>resource.authentication_token, :login=>resource.login, :email=>resource.email}
+    if request.format != :json
+        render :status=>406, :json=>{:message=>"The request must be json"}
+        return
+    end
+
+    if email.nil? or password.nil?
+      render :status=>400, :json=>{:message=>"The request must contain the user email and password."}
       return
     end
-    invalid_login_attempt
+
+    @user=User.find_by_email(email.downcase)
+
+    if @user.nil?
+      logger.info("User #{email} failed sign-in, user cannot be found.")
+      render :status=>401, :json=>{:message=>"Invalid email or password."}
+      return
+    end
+
+    @user.ensure_authentication_token!
+    @user.save!
+
+    if not @user.valid_password?(password)
+      logger.info("User #{email} failed sign-in, password \"#{password}\" is invalid")
+      render :status=>401, :json=>{:message=>"Invalid email or password."}
+    else
+      render :status=>200, :json=>{:token=>@user.authentication_token}
+    end
   end
 
   def destroy
-    sign_out(resource_name)
+    @user=User.find_by_authentication_token(params[:id])
+    if @user.nil?
+      logger.info("Token not found.")
+      render :status=>404, :json=>{:message=>"Invalid token."}
+    else
+      @user.reset_authentication_token!
+      render :status=>200, :json=>{:token=>params[:id]}
+    end
   end
 
-  protected
-    def ensure_params_exist
-      return unless params[:user_login].blank?
-      render :json=>{:success=>false, :message=>"missing user_login parameter"}, :status=>422
-    end
-
-    def invalid_login_attempt
-      warden.custom_failure!
-      render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>401
-    end
 end
