@@ -7,6 +7,11 @@ BaseJumper::Application.routes.draw do
 
   devise_for :users
 
+  namespace :api do
+    resources :sessions,        :only => [:create, :destroy]
+    resources :registrations,  :only => [:create]
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
