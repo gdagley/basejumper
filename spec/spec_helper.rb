@@ -29,4 +29,10 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # If repeating "FactoryGirl" is too verbose for you, you can mix the syntax
+  # methods in.  This allows you to use the core set of syntax methods (build,
+  # build_stubbed, create, attributes_for, and their *_list counterparts) without
+  # having to call them on FactoryGirl directly.
+  config.include FactoryGirl::Syntax::Methods
 end

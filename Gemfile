@@ -25,6 +25,8 @@ group :development, :test do
   gem "sqlite3"
   gem "capybara"
   gem "simplecov"
+  gem 'factory_girl_rails'
+  gem 'faker'
 end
 
 group :test do
