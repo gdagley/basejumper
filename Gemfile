@@ -20,6 +20,11 @@ group :assets do
   gem "therubyracer"
 end
 
+# for deploying to heroku
+group :production do
+  gem 'pg'
+end
+
 group :development, :test do
   gem "rspec-rails"
   gem "sqlite3"

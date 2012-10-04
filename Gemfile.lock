@@ -155,6 +155,7 @@ GEM
     netrc (0.7.7)
     nokogiri (1.5.5)
     orm_adapter (0.4.0)
+    pg (0.14.1)
     polyglot (0.3.3)
     progressbar (0.11.0)
     quiet_assets (1.0.1)
@@ -298,6 +299,7 @@ DEPENDENCIES
   guard-unicorn
   heroku_san
   jquery-rails
+  pg
   quiet_assets
   rack-livereload
   rails

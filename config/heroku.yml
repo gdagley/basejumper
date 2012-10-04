@@ -10,7 +10,7 @@
 #     - <Heroku config:var name>: <Heroku config:var value>
 #
 production:
-  app: base_jumper_service
+  app: base-jumper
   stack: cedar
   tag: production/*
   config:
@@ -19,10 +19,10 @@ production:
 
 staging:
   stack: cedar
-  app: base_jumper_service-staging
+  app: base-jumper-staging
   config: &default
     BUNDLE_WITHOUT: "development:test"
 
 demo:
-  app: base_jumper_service-demo
+  app: base-jumper-demo
   config: *default
