@@ -21,7 +21,9 @@ replacements = [
 ]
 
 files = Dir.glob("**/*.*")
+#these files need to be manually added because they will not be picked up by the glob
 files << ".rvmrc"
+files << "Rakefile"
 files.each do |filename|
   next if filename == "rename.rb" || File.directory?(filename)
 
