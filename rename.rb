@@ -6,6 +6,9 @@ unless app_name
   exit
 end
 
+# In case someone uses CamelCaseAppName
+app_name.gsub!(/(.)([A-Z])/,'\1_\2').downcase!
+
 underscore_project_name = app_name.gsub(/\W/, '_').squeeze('_')
 camel_project_name = underscore_project_name.split('_').map {|w| w.capitalize }.join
 hyphen_project_name = underscore_project_name.gsub('_', '-')

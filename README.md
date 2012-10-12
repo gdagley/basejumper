@@ -2,6 +2,9 @@
 
 ## Getting Started
 
+    > git clone git://github.com/gdagley/basejumper.git my_app_name
+    > cd my_app_name
+    > ruby rename.rb my_app_name
     > gem install bundler
     > bundle install
     > rake db:migrate
