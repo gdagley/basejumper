@@ -15,6 +15,10 @@ RailsAdmin.config do |config|
   config.current_user_method { current_user } # auto-generated
   config.authorize_with :cancan, AdminAbility
 
+  config.attr_accessible_role do
+    _current_user.roles.first
+  end
+
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 
@@ -51,60 +55,30 @@ RailsAdmin.config do |config|
   # Now you probably need to tour the wiki a bit: https://github.com/sferik/rails_admin/wiki
   # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
 
+  config.model 'User' do
+    field :email
+    field :password
+    field :password_confirmation
+    field :roles do
+      formatted_value do
+        value.map(&:to_s).join(',')
+      end
+    end
+    field :sign_in_count
+    field :current_sign_in_at
+    field :last_sign_in_at
+    field :current_sign_in_ip
+    field :last_sign_in_ip
+    field :created_at
+    field :updated_at
 
-
-  ###  User  ###
-
-  # config.model 'User' do
-
-  #   # You can copy this to a 'rails_admin do ... end' block inside your user.rb model definition
-
-  #   # Found associations:
-
-
-
-  #   # Found columns:
-
-  #     configure :id, :integer
-  #     configure :email, :string
-  #     configure :password, :password         # Hidden
-  #     configure :password_confirmation, :password         # Hidden
-  #     configure :reset_password_token, :string         # Hidden
-  #     configure :reset_password_sent_at, :datetime
-  #     configure :remember_created_at, :datetime
-  #     configure :sign_in_count, :integer
-  #     configure :current_sign_in_at, :datetime
-  #     configure :last_sign_in_at, :datetime
-  #     configure :current_sign_in_ip, :string
-  #     configure :last_sign_in_ip, :string
-  #     configure :created_at, :datetime
-  #     configure :updated_at, :datetime
-  #     configure :roles_mask, :integer
-  #     configure :authentication_token, :string
-
-  #   # Cross-section configuration:
-
-  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
-  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
-  #     # label_plural 'My models'      # Same, plural
-  #     # weight 0                      # Navigation priority. Bigger is higher.
-  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
-  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
-
-  #   # Section specific configuration:
-
-  #     list do
-  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
-  #       # items_per_page 100    # Override default_items_per_page
-  #       # sort_by :id           # Sort column (default is primary key)
-  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
-  #     end
-  #     show do; end
-  #     edit do; end
-  #     export do; end
-  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
-  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
-  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
-  # end
+    edit do
+      field :roles do
+        render do
+          bindings[:form].select( "roles", User.valid_roles, {:selected => bindings[:object].roles.map(&:to_s)}, { :multiple => true })
+        end
+      end
+    end
+  end
 
 end
