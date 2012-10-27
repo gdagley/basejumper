@@ -15,6 +15,10 @@
 
 The app is setup to separate the web application (HTML) from the API (JSON).  You will find the API controllers in the `app/controllers/api` which have their own sessions and registration controllers.
 
+### Useful tools
+
+* **pry** - <http://pryrepl.org/>
+
 ### Testing
 
 * rspec

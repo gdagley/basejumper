@@ -56,4 +56,5 @@ group :development do
     gem "guard-unicorn"
     gem "heroku_san"
     gem 'term-ansicolor'
+    gem 'pry-rails'
 end
