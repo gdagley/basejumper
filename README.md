@@ -18,6 +18,7 @@ The app is setup to separate the web application (HTML) from the API (JSON).  Yo
 ### Useful tools
 
 * **pry** - <http://pryrepl.org/>
+* **letters** - <http://lettersrb.com/>
 
 ### Testing
 
