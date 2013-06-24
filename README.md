@@ -19,6 +19,9 @@ The app is setup to separate the web application (HTML) from the API (JSON).  Yo
 
 * **pry** - <http://pryrepl.org/>
 * **letters** - <http://lettersrb.com/>
+* **better_errors** - <https://github.com/charliesome/better_errors>
+* **rails_footnotes** - <https://github.com/josevalim/rails-footnotes>
+* **rails_panel** - <https://github.com/dejan/rails_panel>
 
 ### Testing
 
