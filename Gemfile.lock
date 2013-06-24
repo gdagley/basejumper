@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    addressable (2.3.4)
     annotate (2.5.0)
       rake
     arel (3.0.2)
@@ -89,6 +90,9 @@ GEM
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
+    email_spec (1.4.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.25.0)
@@ -153,6 +157,8 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.0)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     letters (0.3.1)
       activesupport
       awesome_print
@@ -334,6 +340,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
+  email_spec
   factory_girl_rails
   faker
   font-awesome-sass-rails

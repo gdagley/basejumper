@@ -1,7 +1,8 @@
 BaseJumper::Application.routes.draw do
+  authenticated :user do
+    root :to => 'home#index'
+  end
   root :to => 'home#index'
-
-  get "home/index"
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 

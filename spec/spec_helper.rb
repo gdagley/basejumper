@@ -16,6 +16,7 @@ end if ENV["COVERAGE"]
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'email_spec'
 require 'rspec/autorun'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -49,4 +50,22 @@ RSpec.configure do |config|
   # build_stubbed, create, attributes_for, and their *_list counterparts) without
   # having to call them on FactoryGirl directly.
   config.include FactoryGirl::Syntax::Methods
+
+  # To reset your application database to a pristine state during testing, you
+  # can use Database Cleaner with RSpec.
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  # The email_spec gem provides a collection of RSpec matchers for testing email.
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
 end
