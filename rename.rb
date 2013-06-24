@@ -7,7 +7,8 @@ unless app_name
 end
 
 # In case someone uses CamelCaseAppName
-app_name.gsub!(/(.)([A-Z])/,'\1_\2').downcase!
+app_name = app_name.gsub(/(.)([A-Z])/,'\1_\2')
+app_name.downcase!
 
 underscore_project_name = app_name.gsub(/\W/, '_').squeeze('_')
 camel_project_name = underscore_project_name.split('_').map {|w| w.capitalize }.join
@@ -25,7 +26,7 @@ replacements = [
 
 files = Dir.glob("**/*.*")
 #these files need to be manually added because they will not be picked up by the glob
-files << ".rvmrc"
+files << ".ruby-gemset"
 files << "Rakefile"
 files.each do |filename|
   next if filename == "rename.rb" || File.directory?(filename)
