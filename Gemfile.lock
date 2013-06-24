@@ -33,9 +33,15 @@ GEM
     arel (3.0.2)
     awesome_print (1.1.0)
     bcrypt-ruby (3.0.1)
+    better_errors (0.9.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     builder (3.0.4)
+    callsite (0.0.11)
     cancan (1.6.10)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -67,6 +73,7 @@ GEM
       nokogiri (>= 1.5.0)
       rails (~> 3.0)
     database_cleaner (1.0.1)
+    debug_inspector (0.0.2)
     debugger (1.6.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -161,6 +168,10 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_request (0.2.7)
+      callsite
+      rack-contrib
+      railties
     method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.0)
@@ -182,6 +193,8 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-livereload (0.3.15)
       rack
     rack-pjax (0.7.0)
@@ -199,6 +212,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails-footnotes (3.7.9)
+      rails (>= 3.0.0)
     rails_admin (0.4.9)
       bootstrap-sass (~> 2.2)
       builder (~> 3.0)
@@ -310,6 +325,8 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  better_errors
+  binding_of_caller
   bootstrap-sass
   cancan
   capybara
@@ -328,11 +345,13 @@ DEPENDENCIES
   heroku_san
   jquery-rails
   letters
+  meta_request
   pg
   pry-rails
   quiet_assets
   rack-livereload
   rails
+  rails-footnotes
   rails_admin
   rails_best_practices
   rb-fsevent

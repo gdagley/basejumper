@@ -44,6 +44,10 @@ end
 guard_notifications = true
 
 group :development do
+    gem 'better_errors'
+    gem 'binding_of_caller'
+    gem 'meta_request'
+    gem 'rails-footnotes'
     gem 'annotate'
     gem 'quiet_assets'
     gem 'rb-fsevent'
